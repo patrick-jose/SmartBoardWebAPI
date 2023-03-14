@@ -1,3 +1,4 @@
+using System.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SmartBoardWebAPI.Controllers
@@ -19,15 +20,21 @@ namespace SmartBoardWebAPI.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public User Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            using (IDbConnection cnn = NpgsqlConnection(""))
+
+            return new User {
+                Id = 1,
+                Name = "Teste",
+                Password = "testepw"
+            };
         }
+    }
+
+    public class User {
+        public long Id { get; set; }
+        public String Name { get; set; }
+        public String Password { get; set; }
     }
 }

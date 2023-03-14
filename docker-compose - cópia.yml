@@ -9,12 +9,24 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgrespw
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=smartboarddb
+      - POSTGRES_DB=smarboarddb
     ports: 
       - "5432:5432"
     volumes: 
       - db:/var/lib/postgresql/data/
       - ./db/init.sql:/docker-entrypoint-initdb.d/
+  SmartBoardWebAPI:
+    image: smartboardwebapi
+    build:
+      context: .
+    ports:
+      - "32777:80"
+    networks:
+      - smartboard-network
 
 volumes:
   db:
+    driver: local
+networks: 
+    smartboard-network:
+        driver: bridge
