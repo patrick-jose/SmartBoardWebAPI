@@ -6,28 +6,28 @@ using SmartBoardWebAPI.Utils;
 
 namespace SmartBoardWebAPI.Data.Repository
 {
-    public class TaskRepository : ITaskRepository
+    public class UserRepository : IUserRepository
     {
         private readonly ILogWriter _log;
         private readonly DbConnection _dbConnection;
 
-        public TaskRepository(ILogWriter log)
+        public UserRepository(ILogWriter log)
         {
             _log = log;
             _dbConnection = new DbConnection(_log);
         }
 
-        public async Task<IEnumerable<TaskModel>> GetTasksAsync()
+        public async Task<IEnumerable<UserModel>> GetUsersAsync()
         {
             try
             {
-                string commandText = @$"select * from smartboard.task";
+                string commandText = @$"select * from smartboard.user";
 
-                var tasks = await _dbConnection.connection.QueryAsync<TaskModel>(commandText);
+                var users = await _dbConnection.connection.QueryAsync<UserModel>(commandText);
 
                 _dbConnection.CloseConnection();
 
-                return tasks;
+                return users;
             }
             catch (Exception ex)
             {
@@ -36,19 +36,19 @@ namespace SmartBoardWebAPI.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<TaskModel>> GetTasksBySectionIdAsync(long sectionId)
+        public async Task<UserModel> GetUserByIdAsync(long id)
         {
             try
             {
-                string commandText = @$"select * from smartboard.task t where t.sectionid = @id";
+                string commandText = @$"select * from smartboard.user u where u.id = @id";
 
-                var queryArgs = new { id = sectionId };
+                var queryArgs = new { id = id };
 
-                var tasks = await _dbConnection.connection.QueryAsync<TaskModel>(commandText, queryArgs);
+                var user = await _dbConnection.connection.QueryFirstOrDefaultAsync<UserModel>(commandText, queryArgs);
 
                 _dbConnection.CloseConnection();
 
-                return tasks;
+                return user;
             }
             catch (Exception ex)
             {

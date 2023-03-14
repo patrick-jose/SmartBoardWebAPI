@@ -1,13 +1,12 @@
 ﻿using System;
-namespace SmartBoardWebAPI.Data.Models
+namespace SmartBoardWebAPI.Data.DTOs
 {
-	public class StatusHistoryModel
+	public class StatusHistoryDTO
 	{
-		public long UserId { get; set; }
-		public long TaskId { get; set; }
-		public long PreviousSectionId { get; set; }
-        public long ActualSectionId { get; set; }
+		public UserDTO User { get; set; }
+		public SectionDTO PreviousSection { get; set; }
+        public SectionDTO ActualSection { get; set; }
         public DateTime DateModified { get; set; }
-	}
+    }
 }
 

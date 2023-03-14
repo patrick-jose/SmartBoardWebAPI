@@ -5,35 +5,35 @@ using SmartBoardWebAPI.Utils;
 
 namespace SmartBoardWebAPI.Business
 {
-	public class BoardBusiness
-	{
+    public class UserBusiness : IUserBusiness
+    {
         private readonly ILogWriter _log;
-        private readonly IBoardRepository _boardRepository;
+        private readonly IUserRepository _userRepository;
 
-		public BoardBusiness(ILogWriter log, IBoardRepository boardRepository)
-		{
-			_log = log;
-			_boardRepository = boardRepository;
-		}
+        public UserBusiness(ILogWriter log, IUserRepository boardRepository)
+        {
+            _log = log;
+            _userRepository = boardRepository;
+        }
 
-        public async Task<List<BoardDTO>> GetActiveBoardsAsync()
+        public async Task<List<UserDTO>> GetUsersAsync()
         {
             try
             {
-                var boardModelEnumerable = await _boardRepository.GetActiveBoardsAsync();
+                var userModelEnumerable = await _userRepository.GetUsersAsync();
 
-                var boardDTOList = new List<BoardDTO>();
+                var userDTOList = new List<UserDTO>();
 
-                foreach (var boardModel in boardModelEnumerable)
+                foreach (var userModel in userModelEnumerable)
                 {
-                    var itemDTO = new BoardDTO();
+                    var itemDTO = new UserDTO();
 
-                    itemDTO = boardModel.ToDTO();
+                    itemDTO = userModel.ToDTO();
 
-                    boardDTOList.Add(itemDTO);
+                    userDTOList.Add(itemDTO);
                 }
 
-                return boardDTOList;
+                return userDTOList;
             }
             catch (Exception ex)
             {

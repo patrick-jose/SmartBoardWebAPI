@@ -1,12 +1,12 @@
 ﻿using System;
-namespace SmartBoardWebAPI.Data.Models
+namespace SmartBoardWebAPI.Data.DTOs
 {
-	public class BoardModel
+	public class BoardDTO
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }
 		public bool Active { get; set; }
-		public IEnumerable<SectionModel> Sections { get; set; }
+		public List<SectionDTO> Sections { get; set; }
 	}
 }
 

@@ -2,10 +2,10 @@
 using SmartBoardWebAPI.Data.Repository;
 using SmartBoardWebAPI.Utils;
 
-namespace SmartBoardWebAPI.Tests;
+namespace SmartBoardWebAPI.Tests.Repository;
 
 [TestClass]
-public class UserTests
+public class UserRepositoryTests
 {
     private IUserRepository _userRepository;
     private ILogWriter _log;
@@ -22,7 +22,18 @@ public class UserTests
     }
 
     [TestMethod]
-    public async Task GetUsersByBoardIdAsyncTest()
+    public async Task GetUsersByIdAsyncTestResturnNothing()
+    {
+        _log = new LogWriter();
+        _userRepository = new UserRepository(_log);
+
+        var result = await _userRepository.GetUserByIdAsync(3);
+
+        Assert.IsNull(result);
+    }
+
+    [TestMethod]
+    public async Task GetUsersByIdAsyncTest()
     {
         _log = new LogWriter();
         _userRepository = new UserRepository(_log);

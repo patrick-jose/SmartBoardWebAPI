@@ -6,30 +6,28 @@ using SmartBoardWebAPI.Utils;
 
 namespace SmartBoardWebAPI.Data.Repository
 {
-    public class SectionRepository : ISectionRepository
+    public class TaskRepository : ITaskRepository
     {
-        private const string CONNECTION_STRING = "Host=localhost:5432;" +
-                   "Username=postgres;" +
-                   "Password=postgrespw;" +
-                   "Database=smartboarddb";
-
-        private readonly NpgsqlConnection connection;
         private readonly ILogWriter _log;
+        private readonly DbConnection _dbConnection;
 
-        public SectionRepository(ILogWriter log)
+        public TaskRepository(ILogWriter log)
         {
-            connection = new NpgsqlConnection(CONNECTION_STRING);
-            connection.Open();
             _log = log;
+            _dbConnection = new DbConnection(_log);
         }
 
-        public async Task<IEnumerable<SectionModel>> GetSectionsAsync()
+        public async Task<IEnumerable<TaskModel>> GetTasksAsync()
         {
             try
             {
-                string commandText = @$"select * from smartboard.section";
+                string commandText = @$"select * from smartboard.task";
 
-                return await connection.QueryAsync<SectionModel>(commandText);
+                var tasks = await _dbConnection.connection.QueryAsync<TaskModel>(commandText);
+
+                _dbConnection.CloseConnection();
+
+                return tasks;
             }
             catch (Exception ex)
             {
@@ -38,15 +36,40 @@ namespace SmartBoardWebAPI.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<SectionModel>> GetSectionsByBoardIdAsync(long boardId)
+        public async Task<IEnumerable<TaskModel>> GetTasksBySectionIdAsync(long sectionId)
         {
             try
             {
-                string commandText = @$"select * from smartboard.section s where s.boardid = @id";
+                string commandText = @$"select * from smartboard.task t where t.sectionid = @id";
 
-                var queryArgs = new { id = boardId };
+                var queryArgs = new { id = sectionId };
 
-                return await connection.QueryAsync<SectionModel>(commandText, queryArgs);
+                var tasks = await _dbConnection.connection.QueryAsync<TaskModel>(commandText, queryArgs);
+
+                _dbConnection.CloseConnection();
+
+                return tasks;
+            }
+            catch (Exception ex)
+            {
+                _log.LogWrite(ex.Message);
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<TaskModel>> GetActiveTasksBySectionIdAsync(long sectionId)
+        {
+            try
+            {
+                string commandText = @$"select * from smartboard.task t where t.sectionid = @id and t.active = true";
+
+                var queryArgs = new { id = sectionId };
+
+                var tasks = await _dbConnection.connection.QueryAsync<TaskModel>(commandText, queryArgs);
+
+                _dbConnection.CloseConnection();
+
+                return tasks;
             }
             catch (Exception ex)
             {

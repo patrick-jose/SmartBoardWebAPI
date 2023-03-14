@@ -1,11 +1,10 @@
 ﻿using System;
-namespace SmartBoardWebAPI.Data.Models
+namespace SmartBoardWebAPI.Data.DTOs
 {
-	public class UserModel
+	public class UserDTO
 	{
 		public long Id { get; set; }
 		public string Name { get; set; }
-		public string Password { get; set; }
     }
 }
 

@@ -2,10 +2,10 @@
 using SmartBoardWebAPI.Data.Repository;
 using SmartBoardWebAPI.Utils;
 
-namespace SmartBoardWebAPI.Tests;
+namespace SmartBoardWebAPI.Tests.Repository;
 
 [TestClass]
-public class TaskTests
+public class TaskRepositoryTests
 {
     private ITaskRepository _taskRepository;
     private ILogWriter _log;

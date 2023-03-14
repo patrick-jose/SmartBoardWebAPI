@@ -6,28 +6,28 @@ using SmartBoardWebAPI.Utils;
 
 namespace SmartBoardWebAPI.Data.Repository
 {
-    public class UserRepository : IUserRepository
+    public class StatusHistoryRepository : IStatusHistoryRepository
     {
         private readonly ILogWriter _log;
         private readonly DbConnection _dbConnection;
 
-        public UserRepository(ILogWriter log)
+        public StatusHistoryRepository(ILogWriter log)
         {
             _log = log;
             _dbConnection = new DbConnection(_log);
         }
 
-        public async Task<IEnumerable<UserModel>> GetUsersAsync()
+        public async Task<IEnumerable<StatusHistoryModel>> GetStatusHistorysAsync()
         {
             try
             {
-                string commandText = @$"select * from smartboard.user";
+                string commandText = @$"select * from smartboard.statushistory";
 
-                var users = await _dbConnection.connection.QueryAsync<UserModel>(commandText);
+                var statusHistorys = await _dbConnection.connection.QueryAsync<StatusHistoryModel>(commandText);
 
                 _dbConnection.CloseConnection();
 
-                return users;
+                return statusHistorys;
             }
             catch (Exception ex)
             {
@@ -36,19 +36,19 @@ namespace SmartBoardWebAPI.Data.Repository
             }
         }
 
-        public async Task<UserModel> GetUserByIdAsync(long id)
+        public async Task<IEnumerable<StatusHistoryModel>> GetStatusHistoryByTaskIdAsync(long taskId)
         {
             try
             {
-                string commandText = @$"select * from smartboard.user u where u.id = @id";
+                string commandText = @$"select * from smartboard.statushistory sh where sh.taskid = @id";
 
-                var queryArgs = new { id = id };
+                var queryArgs = new { id = taskId };
 
-                var user = await _dbConnection.connection.QueryFirstAsync<UserModel>(commandText, queryArgs);
+                var statusHistory = await _dbConnection.connection.QueryAsync<StatusHistoryModel>(commandText, queryArgs);
 
                 _dbConnection.CloseConnection();
 
-                return user;
+                return statusHistory;
             }
             catch (Exception ex)
             {

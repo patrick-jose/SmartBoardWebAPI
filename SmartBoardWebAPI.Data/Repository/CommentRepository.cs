@@ -6,28 +6,28 @@ using SmartBoardWebAPI.Utils;
 
 namespace SmartBoardWebAPI.Data.Repository
 {
-    public class TaskRepository : ITaskRepository
+    public class CommentRepository : ICommentRepository
     {
         private readonly ILogWriter _log;
         private readonly DbConnection _dbConnection;
 
-        public TaskRepository(ILogWriter log)
+        public CommentRepository(ILogWriter log)
         {
             _log = log;
             _dbConnection = new DbConnection(_log);
         }
 
-        public async Task<IEnumerable<TaskModel>> GetTasksAsync()
+        public async Task<IEnumerable<CommentModel>> GetCommentsAsync()
         {
             try
             {
-                string commandText = @$"select * from smartboard.task";
+                string commandText = @$"select * from smartboard.comment";
 
-                var tasks = await _dbConnection.connection.QueryAsync<TaskModel>(commandText);
+                var comments = await _dbConnection.connection.QueryAsync<CommentModel>(commandText);
 
                 _dbConnection.CloseConnection();
 
-                return tasks;
+                return comments;
             }
             catch (Exception ex)
             {
@@ -36,19 +36,19 @@ namespace SmartBoardWebAPI.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<TaskModel>> GetTasksBySectionIdAsync(long sectionId)
+        public async Task<IEnumerable<CommentModel>> GetCommentsByTaskIdAsync(long taskId)
         {
             try
             {
-                string commandText = @$"select * from smartboard.task s where s.sectionid = @id";
+                string commandText = @$"select * from smartboard.comment c where c.taskid = @id";
 
-                var queryArgs = new { id = sectionId };
+                var queryArgs = new { id = taskId };
 
-                var tasks = await _dbConnection.connection.QueryAsync<TaskModel>(commandText, queryArgs);
+                var comments = await _dbConnection.connection.QueryAsync<CommentModel>(commandText, queryArgs);
 
                 _dbConnection.CloseConnection();
 
-                return tasks;
+                return comments;
             }
             catch (Exception ex)
             {

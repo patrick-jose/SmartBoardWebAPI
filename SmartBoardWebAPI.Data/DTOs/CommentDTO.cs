@@ -1,11 +1,10 @@
 ﻿using System;
-namespace SmartBoardWebAPI.Data.Models
+namespace SmartBoardWebAPI.Data.DTOs
 {
-	public class CommentModel
+	public class CommentDTO
 	{
-		public long Id { get; set; }
-		public long TaskId { get; set; }
-		public long WriterId { get; set; }
+        public long Id { get; set; }
+        public UserDTO Writer { get; set; }
 		public string Content { get; set; }
 		public DateTime DateCreation { get; set; }
 	}

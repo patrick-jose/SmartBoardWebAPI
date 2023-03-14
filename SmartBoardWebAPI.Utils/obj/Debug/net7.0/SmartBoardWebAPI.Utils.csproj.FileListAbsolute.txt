@@ -1,0 +1,12 @@
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/bin/Debug/net7.0/SmartBoardWebAPI.Utils.deps.json
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/bin/Debug/net7.0/SmartBoardWebAPI.Utils.dll
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/bin/Debug/net7.0/SmartBoardWebAPI.Utils.pdb
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/obj/Debug/net7.0/SmartBoardWebAPI.Utils.csproj.AssemblyReference.cache
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/obj/Debug/net7.0/SmartBoardWebAPI.Utils.GeneratedMSBuildEditorConfig.editorconfig
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/obj/Debug/net7.0/SmartBoardWebAPI.Utils.AssemblyInfoInputs.cache
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/obj/Debug/net7.0/SmartBoardWebAPI.Utils.AssemblyInfo.cs
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/obj/Debug/net7.0/SmartBoardWebAPI.Utils.csproj.CoreCompileInputs.cache
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/obj/Debug/net7.0/SmartBoardWebAPI.Utils.dll
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/obj/Debug/net7.0/refint/SmartBoardWebAPI.Utils.dll
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/obj/Debug/net7.0/SmartBoardWebAPI.Utils.pdb
+/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/obj/Debug/net7.0/ref/SmartBoardWebAPI.Utils.dll
