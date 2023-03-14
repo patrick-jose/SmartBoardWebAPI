@@ -1,4 +1,5 @@
 using System.Data;
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -23,7 +24,7 @@ namespace SmartBoardWebAPI.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public void Get()
         {
-            new User {
+            var user = new User {
                 Id = 1,
                 Name = "Teste",
                 Password = "testepw"
@@ -32,6 +33,9 @@ namespace SmartBoardWebAPI.Controllers
             using (IDbConnection cnn = new NpgsqlConnection("Host=SmartBoardDB;Username=postgres;Password=postgrespw;Database=smartboarddb"))
             {
                 string sqlInsert = "INSERT INTO user VALUES(@Id, @Name, @Password)";
+
+                cnn.Open();
+                cnn.Execute(sqlInsert, user);
             }
         }
     }

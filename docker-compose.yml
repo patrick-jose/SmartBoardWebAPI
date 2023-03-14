@@ -15,6 +15,22 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data/
       - ./db/init.sql:/docker-entrypoint-initdb.d/
+    networks:
+      - smartboard-network
+
+  SmartBoardWebAPI:
+    image: smartboardwebapi
+    build:
+      context: .
+      dockerfile: SmartBoardWebAPI/Dockerfile
+    depends_on: 
+      - SmartBoardDB
+    ports:
+      - "32777:80"
+    networks:
+      - smartboard-network
 
 volumes:
   db:
+networks: 
+    smartboard-network:
