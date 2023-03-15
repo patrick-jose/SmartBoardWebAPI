@@ -1,4 +1,5 @@
-﻿using SmartBoardWebAPI.Data.Models;
+﻿using SmartBoardWebAPI.Data.DTOs;
+using SmartBoardWebAPI.Data.Models;
 
 namespace SmartBoardWebAPI.Data.Repository
 {
@@ -16,5 +17,13 @@ namespace SmartBoardWebAPI.Data.Repository
         /// </summary>
         /// <returns>IEnumerable<UserModel></returns>
         Task<IEnumerable<UserModel>> GetUsersAsync();
+
+        /// <summary>
+        /// Check login credentials
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <param name="password"></param>
+        /// <returns>bool</returns>
+        Task<bool> CheckCredentialsAsync(UserDTO dto, string password);
     }
 }

@@ -7,16 +7,16 @@ namespace SmartBoardWebAPI.Tests.Repository;
 [TestClass]
 public class CommentRepositoryTests
 {
-    private ICommentRepository _taskRepository;
+    private ICommentRepository _commentRepository;
     private ILogWriter _log;
 
     [TestMethod]
     public async Task GetCommentsAsyncTest()
     {
         _log = new LogWriter();
-        _taskRepository = new CommentRepository(_log);
+        _commentRepository = new CommentRepository(_log);
 
-        var result = await _taskRepository.GetCommentsAsync();
+        var result = await _commentRepository.GetCommentsAsync();
 
         Assert.IsTrue(result.Any());
     }
@@ -25,9 +25,9 @@ public class CommentRepositoryTests
     public async Task GetCommentsBySectionIdAsyncTest()
     {
         _log = new LogWriter();
-        _taskRepository = new CommentRepository(_log);
+        _commentRepository = new CommentRepository(_log);
 
-        var result = await _taskRepository.GetCommentsByTaskIdAsync(2);
+        var result = await _commentRepository.GetCommentsByTaskIdAsync(2);
 
         Assert.IsTrue(result.Any());
     }

@@ -13,15 +13,11 @@ namespace SmartBoardWebAPI.Data.Models
         public long ActualSectionId { get; set; }
         public DateTime DateModified { get; set; }
 
-        internal async Task<StatusHistoryDTO> ToDTO()
+        public async Task<StatusHistoryDTO> ToDTO(IUserRepository userRepository, ISectionRepository sectionRepository)
         {
-            ILogWriter _log = new LogWriter();
-            ISectionRepository _sectionRepository = new SectionRepository(_log);
-            IUserRepository _userRepository = new UserRepository(_log);
-
-            var actualSection = await _sectionRepository.GetSectionByIdAsync(this.ActualSectionId);
-            var previousSection = await _sectionRepository.GetSectionByIdAsync(this.PreviousSectionId);
-            var user = await _userRepository.GetUserByIdAsync(this.UserId);
+            var actualSection = await sectionRepository.GetSectionByIdAsync(this.ActualSectionId, false);
+            var previousSection = await sectionRepository.GetSectionByIdAsync(this.PreviousSectionId, false);
+            var user = await userRepository.GetUserByIdAsync(this.UserId);
 
             if (actualSection == null)
                 actualSection = new SectionModel();
@@ -32,9 +28,9 @@ namespace SmartBoardWebAPI.Data.Models
 
             return new StatusHistoryDTO()
             {
-                ActualSection = actualSection.ToDTO(),
+                ActualSection = actualSection.ToDTO(userRepository, sectionRepository),
                 DateModified = this.DateModified,
-                PreviousSection = previousSection.ToDTO(),
+                PreviousSection = previousSection.ToDTO(userRepository, sectionRepository),               
                 User = user.ToDTO()
             };
         }

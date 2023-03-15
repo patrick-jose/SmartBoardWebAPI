@@ -21,7 +21,8 @@ namespace SmartBoardWebAPI.Data.Repository
         {
             try
             {
-                string commandText = @$"select * from smartboard.comment";
+                string commandText = @$"select * from smartboard.comment c
+                                        order by c.datecreation desc";
 
                 var comments = await _dbConnection.connection.QueryAsync<CommentModel>(commandText);
 
@@ -40,7 +41,9 @@ namespace SmartBoardWebAPI.Data.Repository
         {
             try
             {
-                string commandText = @$"select * from smartboard.comment c where c.taskid = @id";
+                string commandText = @$"select * from smartboard.comment c
+                                        where c.taskid = @id
+                                    order by c.datecreation desc";
 
                 var queryArgs = new { id = taskId };
 

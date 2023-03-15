@@ -4,13 +4,13 @@ using SmartBoardWebAPI.Utils;
 
 namespace SmartBoardWebAPI.Data.Repository
 {
-    public class DbConnection
+    public class DbConnection : IDbConnection
     {
         private const string CONNECTION_STRING = "Host=localhost:5432;Username=postgres;Password=postgrespw;Database=smartboarddb;Pooling=false;Timeout=300;CommandTimeout=300";
         public readonly NpgsqlConnection connection;
         private readonly ILogWriter _log;
 
-        public DbConnection(ILogWriter log)
+        internal DbConnection(ILogWriter log)
         {
             try
             {
@@ -28,6 +28,11 @@ namespace SmartBoardWebAPI.Data.Repository
         public void CloseConnection()
         {
             this.connection.Close();
+        }
+
+        public DbConnection GetConnection()
+        {
+            return this;
         }
     }
 }

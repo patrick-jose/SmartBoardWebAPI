@@ -20,35 +20,33 @@ namespace SmartBoardWebAPI.Controllers
     [Route("api/[controller]")]
     public class BoardController : ControllerBase
     {
-        private readonly IBoardRepository _boardRepository;
         private readonly IBoardBusiness _boardBusiness;
-        private readonly ILogWriter _log;
 
-        public BoardController(ILogWriter logger, IBoardRepository boardRepository, IBoardBusiness boardBusiness)
+        public BoardController(IBoardBusiness boardBusiness)
         {
-            _log = logger;
-            _boardRepository = boardRepository;
             _boardBusiness = boardBusiness;
         }
 
         /// <summary>
-        /// Get all active completed boards
+        /// Get all active boards
         /// </summary>
+        /// <param name="filled"></param>
         /// <returns>List<BoardDTO></returns>
-        [HttpGet("getAllActiveBoards/")]
-        public async Task<List<BoardDTO>> GetAllActiveBoards()
+        [HttpGet("GetAllActiveBoards/")]
+        public async Task<List<BoardDTO>> GetAllActiveBoardsFilled(bool filled)
         {
-            return await _boardBusiness.GetActiveBoardsAsync();
+            return await _boardBusiness.GetActiveBoardsAsync(filled);
         }
 
         /// <summary>
-        /// Get all active completed boards
+        /// Get all active boards
         /// </summary>
+        /// <param name="filled"></param>
         /// <returns>List<BoardModel></returns>
-        [HttpGet("getAllActiveBoardsModel/")]
-        public async Task<IEnumerable<BoardModel>> GetAllActiveBoardsModel()
+        [HttpGet("GetAllActiveBoardsModel/")]
+        public async Task<IEnumerable<BoardModel>> GetAllActiveBoardsModelFilled(bool filled)
         {
-            return await _boardBusiness.GetActiveBoardsModelAsync();
+            return await _boardBusiness.GetActiveBoardsModelAsync(filled);
         }
     }
 }

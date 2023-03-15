@@ -21,7 +21,8 @@ namespace SmartBoardWebAPI.Data.Repository
         {
             try
             {
-                string commandText = @$"select * from smartboard.statushistory";
+                string commandText = @$"select * from smartboard.statushistory sh
+                                        order by sh.datemodified desc";
 
                 var statusHistorys = await _dbConnection.connection.QueryAsync<StatusHistoryModel>(commandText);
 
@@ -40,7 +41,9 @@ namespace SmartBoardWebAPI.Data.Repository
         {
             try
             {
-                string commandText = @$"select * from smartboard.statushistory sh where sh.taskid = @id";
+                string commandText = @$"select * from smartboard.statushistory sh
+                                        where sh.taskid = @id
+                                        order by sh.datemodified desc";
 
                 var queryArgs = new { id = taskId };
 

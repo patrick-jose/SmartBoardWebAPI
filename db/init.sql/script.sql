@@ -275,7 +275,7 @@ ALTER SEQUENCE smartboard.section_id_seq OWNED BY smartboard.section.id;
 CREATE TABLE smartboard.statushistory (
     taskid integer NOT NULL,
     datemodified timestamp without time zone,
-    previussectionid integer,
+    previoussectionid integer,
     userid integer NOT NULL,
     actualsectionid integer
 );
@@ -537,7 +537,7 @@ COPY smartboard.section (id, name, boardid, active, "position") FROM stdin;
 -- Data for Name: statushistory; Type: TABLE DATA; Schema: smartboard; Owner: postgres
 --
 
-COPY smartboard.statushistory (taskid, datemodified, previussectionid, userid, actualsectionid) FROM stdin;
+COPY smartboard.statushistory (taskid, datemodified, previoussectionid, userid, actualsectionid) FROM stdin;
 5	2023-03-14 00:00:00	1	1	2
 6	2023-03-14 00:00:00	1	1	2
 7	2023-03-14 00:00:00	1	2	2
@@ -787,7 +787,7 @@ ALTER TABLE ONLY smartboard.statushistory
 --
 
 ALTER TABLE ONLY smartboard.statushistory
-    ADD CONSTRAINT statushistory_previus_fk FOREIGN KEY (previussectionid) REFERENCES smartboard.section(id);
+    ADD CONSTRAINT statushistory_previus_fk FOREIGN KEY (previoussectionid) REFERENCES smartboard.section(id);
 
 
 --

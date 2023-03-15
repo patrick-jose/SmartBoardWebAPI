@@ -20,24 +20,26 @@ namespace SmartBoardWebAPI.Data.Models
 		public IEnumerable<CommentModel> Comments { get; set; }
 		public IEnumerable<StatusHistoryModel> StatusHistory { get; set; }
 
-        internal async Task<TaskDTO> ToDTO()
+        public async Task<TaskDTO> ToDTO(IUserRepository userRepository, ISectionRepository sectionRepository)
         {
             List<CommentDTO> commentDTOList = new List<CommentDTO>();
             List<StatusHistoryDTO> statusHistoryDTOList = new List<StatusHistoryDTO>();
             ILogWriter _log = new LogWriter();
-            IUserRepository _userRepository = new UserRepository(_log);
 
-            this.Comments.ToList().ForEach(async x =>
+            if (this.Comments != null)
+                this.Comments.ToList().ForEach(x =>
+                {
+                    commentDTOList.Add(x.ToDTO(userRepository).Result);
+                });
+
+            if (this.StatusHistory != null)
+            this.StatusHistory.ToList().ForEach(x =>
             {
-                commentDTOList.Add(await x.ToDTO());
-            });
-            this.StatusHistory.ToList().ForEach(async x =>
-            {
-                statusHistoryDTOList.Add(await x.ToDTO());
+                statusHistoryDTOList.Add(x.ToDTO(userRepository, sectionRepository).Result);
             });
 
-            var assignee = await _userRepository.GetUserByIdAsync(this.AssigneeId);
-            var creator = await _userRepository.GetUserByIdAsync(this.CreatorId);
+            var assignee = await userRepository.GetUserByIdAsync(this.AssigneeId);
+            var creator = await userRepository.GetUserByIdAsync(this.CreatorId);
 
             if (assignee == null)
                 assignee = new UserModel();

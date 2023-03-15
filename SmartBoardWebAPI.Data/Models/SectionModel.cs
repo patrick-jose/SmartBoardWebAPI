@@ -1,5 +1,6 @@
 ﻿using System;
 using SmartBoardWebAPI.Data.DTOs;
+using SmartBoardWebAPI.Data.Repository;
 
 namespace SmartBoardWebAPI.Data.Models
 {
@@ -12,14 +13,14 @@ namespace SmartBoardWebAPI.Data.Models
 		public long Position { get; set; }
 		public IEnumerable<TaskModel> Tasks { get; set; }
 
-        internal SectionDTO ToDTO()
+        public SectionDTO ToDTO(IUserRepository userRepository, ISectionRepository sectionRepository)
         {
             List<TaskDTO> taskDTOList = new List<TaskDTO>();
 
             if (this.Tasks != null)
-                this.Tasks.ToList().ForEach(async x =>
+                this.Tasks.ToList().ForEach(x =>
                 {
-                    taskDTOList.Add(await x.ToDTO());
+                    taskDTOList.Add(x.ToDTO(userRepository, sectionRepository).Result);
                 });
 
             var dto = new SectionDTO()

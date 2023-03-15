@@ -11,27 +11,15 @@ namespace SmartBoardWebAPI.Data.Repository
         private readonly ILogWriter _log;
         private readonly DbConnection _dbConnection;
         private readonly ISectionRepository _sectionRepository;
-        private readonly ITaskRepository _taskRepository;
-        private readonly ICommentRepository _commentRepository;
-        private readonly IStatusHistoryRepository _statusHistoryRepository;
 
-        public BoardRepository(
-            ILogWriter log,
-            ISectionRepository sectionRepository,
-            ITaskRepository taskRepository,
-            ICommentRepository commentRepository,
-            IStatusHistoryRepository statusHistoryRepository
-        )
+        public BoardRepository(ILogWriter log, ISectionRepository sectionRepository)
         {
             _log = log;
             _dbConnection = new DbConnection(_log);
             _sectionRepository = sectionRepository;
-            _taskRepository = taskRepository;
-            _commentRepository = commentRepository;
-            _statusHistoryRepository = statusHistoryRepository;
         }
 
-        public async Task<IEnumerable<BoardModel>> GetBoardsAsync()
+        public async Task<IEnumerable<BoardModel>> GetBoardsAsync(bool filled)
         {
             try
             {
@@ -39,20 +27,10 @@ namespace SmartBoardWebAPI.Data.Repository
 
                 var boards = await _dbConnection.connection.QueryAsync<BoardModel>(commandText);
 
-                foreach (var board in boards)
-                {
-                    board.Sections = await _sectionRepository.GetSectionsByBoardIdAsync(board.Id);
-
-                    foreach (var section in board.Sections)
-                    {
-                        section.Tasks = await _taskRepository.GetTasksBySectionIdAsync(section.Id);
-
-                        foreach (var task in section.Tasks)
-                        {
-                            task.Comments = await _commentRepository.GetCommentsByTaskIdAsync(task.Id);
-                            task.StatusHistory = await _statusHistoryRepository.GetStatusHistoryByTaskIdAsync(task.Id);
-                        }
-                    }
+                if (filled)
+                { 
+                    foreach (var board in boards)
+                        board.Sections = await _sectionRepository.GetSectionsByBoardIdAsync(board.Id, filled);
                 }
 
                 _dbConnection.CloseConnection();
@@ -66,7 +44,7 @@ namespace SmartBoardWebAPI.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<BoardModel>> GetActiveBoardsAsync()
+        public async Task<IEnumerable<BoardModel>> GetActiveBoardsAsync(bool filled)
         {
             try
             {
@@ -74,20 +52,10 @@ namespace SmartBoardWebAPI.Data.Repository
 
                 var boards = await _dbConnection.connection.QueryAsync<BoardModel>(commandText);
 
-                foreach (var board in boards)
+                if (filled)
                 {
-                    board.Sections = await _sectionRepository.GetActiveSectionsByBoardIdAsync(board.Id);
-
-                    foreach (var section in board.Sections)
-                    {
-                        section.Tasks = await _taskRepository.GetActiveTasksBySectionIdAsync(section.Id);
-
-                        foreach (var task in section.Tasks)
-                        {
-                            task.Comments = await _commentRepository.GetCommentsByTaskIdAsync(task.Id);
-                            task.StatusHistory = await _statusHistoryRepository.GetStatusHistoryByTaskIdAsync(task.Id);
-                        }
-                    }
+                    foreach (var board in boards)
+                        board.Sections = await _sectionRepository.GetActiveSectionsByBoardIdAsync(board.Id, filled);
                 }
 
                 _dbConnection.CloseConnection();

@@ -1,4 +1,5 @@
 ﻿using System.Reflection.Metadata;
+using SmartBoardWebAPI.Data.DTOs;
 using SmartBoardWebAPI.Data.Repository;
 using SmartBoardWebAPI.Utils;
 
@@ -41,5 +42,29 @@ public class UserRepositoryTests
         var result = await _userRepository.GetUserByIdAsync(2);
 
         Assert.IsNotNull(result);
+    }
+
+    [TestMethod]
+    public async Task CheckCredentialsSucessTest()
+    {
+        _log = new LogWriter();
+        _userRepository = new UserRepository(_log);
+
+        var result = await _userRepository.CheckCredentialsAsync(new UserDTO() { Id = 1 }, "patrickpw");
+
+        Assert.IsNotNull(result);
+        Assert.IsTrue(result);
+    }
+
+    [TestMethod]
+    public async Task CheckCredentialsFailureTest()
+    {
+        _log = new LogWriter();
+        _userRepository = new UserRepository(_log);
+
+        var result = await _userRepository.CheckCredentialsAsync(new UserDTO() { Id = 1 }, "patrickpu");
+
+        Assert.IsNotNull(result);
+        Assert.IsFalse(result);
     }
 }

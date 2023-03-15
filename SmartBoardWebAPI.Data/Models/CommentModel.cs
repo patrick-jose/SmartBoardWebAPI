@@ -13,12 +13,9 @@ namespace SmartBoardWebAPI.Data.Models
 		public string Content { get; set; }
 		public DateTime DateCreation { get; set; }
 
-        internal async Task<CommentDTO> ToDTO()
+        public async Task<CommentDTO> ToDTO(IUserRepository userRepository)
         {
-            ILogWriter _log = new LogWriter();
-            IUserRepository _userRepository = new UserRepository(_log);
-
-            var writer = await _userRepository.GetUserByIdAsync(this.WriterId);
+            var writer = await userRepository.GetUserByIdAsync(this.WriterId);
 
             if (writer == null)
                 writer = new UserModel();

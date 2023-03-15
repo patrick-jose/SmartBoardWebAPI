@@ -1,6 +1,7 @@
 ﻿using System;
 using Dapper;
 using Npgsql;
+using SmartBoardWebAPI.Data.DTOs;
 using SmartBoardWebAPI.Data.Models;
 using SmartBoardWebAPI.Utils;
 
@@ -40,15 +41,39 @@ namespace SmartBoardWebAPI.Data.Repository
         {
             try
             {
-                string commandText = @$"select * from smartboard.user u where u.id = @id";
+                string commandText = @$"select * from smartboard.user u
+                                        where u.id = @id";
 
-                var queryArgs = new { id = id };
+                var queryArgs = new { id };
 
                 var user = await _dbConnection.connection.QueryFirstOrDefaultAsync<UserModel>(commandText, queryArgs);
 
                 _dbConnection.CloseConnection();
 
                 return user;
+            }
+            catch (Exception ex)
+            {
+                _log.LogWrite(ex.Message);
+                throw;
+            }
+        }
+
+        public async Task<bool> CheckCredentialsAsync(UserDTO dto, string password)
+        {
+            try
+            {
+                string commandText = @$"select * from smartboard.user u
+                                        where u.id = @id
+                                        and u.password = @password";
+
+                var queryArgs = new { id = dto.Id, password };
+
+                var user = await _dbConnection.connection.QueryFirstOrDefaultAsync<UserModel>(commandText, queryArgs);
+
+                _dbConnection.CloseConnection();
+
+                return (user != null);
             }
             catch (Exception ex)
             {

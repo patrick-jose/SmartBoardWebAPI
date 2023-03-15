@@ -16,6 +16,19 @@ namespace SmartBoardWebAPI.Business
             _userRepository = boardRepository;
         }
 
+        public async Task<bool> CheckCredentialsAsync(UserDTO userDTO, string password)
+        {
+            try
+            {
+                return await _userRepository.CheckCredentialsAsync(userDTO, password);
+            }
+            catch (Exception ex)
+            {
+                _log.LogWrite(ex.Message);
+                throw ex;
+            }
+        }
+
         public async Task<List<UserDTO>> GetUsersAsync()
         {
             try

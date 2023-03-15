@@ -10,22 +10,18 @@ namespace SmartBoardWebAPI.Business
     {
         private readonly ILogWriter _log;
         private readonly IBoardRepository _boardRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly ISectionRepository _sectionRepository;
 
-        public BoardBusiness(ILogWriter log, IBoardRepository boardRepository, ISectionRepository sectionRepository, IUserRepository userRepository)
+        public BoardBusiness(ILogWriter log, IBoardRepository boardRepository)
         {
             _log = log;
             _boardRepository = boardRepository;
-            _sectionRepository = sectionRepository;
-            _userRepository = userRepository;
         }
 
-        public async Task<List<BoardDTO>> GetActiveBoardsAsync(bool filled)
+        public async Task<List<BoardDTO>> GetActiveBoardsAsync()
         {
             try
             {
-                var boardModelEnumerable = await _boardRepository.GetActiveBoardsAsync(filled);
+                var boardModelEnumerable = await _boardRepository.GetActiveBoardsAsync();
 
                 var boardDTOList = new List<BoardDTO>();
 
@@ -33,7 +29,7 @@ namespace SmartBoardWebAPI.Business
                 {
                     var itemDTO = new BoardDTO();
 
-                    itemDTO = boardModel.ToDTO(_userRepository, _sectionRepository);
+                    itemDTO = boardModel.ToDTO();
 
                     boardDTOList.Add(itemDTO);
                 }
@@ -47,11 +43,11 @@ namespace SmartBoardWebAPI.Business
             }
         }
 
-        public async Task<IEnumerable<BoardModel>> GetActiveBoardsModelAsync(bool filled)
+        public async Task<IEnumerable<BoardModel>> GetActiveBoardsModelAsync()
         {
             try
             {
-                return await _boardRepository.GetActiveBoardsAsync(filled);
+                return await _boardRepository.GetActiveBoardsAsync();
             }
             catch (Exception ex)
             {

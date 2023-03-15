@@ -5,8 +5,18 @@ namespace SmartBoardWebAPI.Business
 {
     public interface IBoardBusiness
     {
-        Task<List<BoardDTO>> GetActiveBoardsAsync();
+        /// <summary>
+        /// Get all active boards
+        /// </summary>
+        /// <param name="filled">Flag to get filled boards</param>
+        /// <returns>IEnumerable<BoardModel></returns>
+        Task<List<BoardDTO>> GetActiveBoardsAsync(bool filled);
 
-        Task<IEnumerable<BoardModel>> GetActiveBoardsModelAsync();
+        /// <summary>
+        /// Get all active boards as database model
+        /// </summary>
+        /// <param name="filled">Flag to get filled boards</param>
+        /// <returns>IEnumerable<BoardModel></returns>
+        Task<IEnumerable<BoardModel>> GetActiveBoardsModelAsync(bool filled);
     }
 }

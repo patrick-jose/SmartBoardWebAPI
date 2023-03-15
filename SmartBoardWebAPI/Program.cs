@@ -11,14 +11,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ILogWriter, LogWriter>();
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-builder.Services.AddScoped<ISectionRepository, SectionRepository>();
-builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IStatusHistoryRepository, StatusHistoryRepository>();
-builder.Services.AddScoped<IBoardRepository, BoardRepository>();
-builder.Services.AddScoped<IBoardBusiness, BoardBusiness>();
+builder.Services.AddSingleton<ILogWriter, LogWriter>();
+builder.Services.AddSingleton<ICommentRepository, CommentRepository>();
+builder.Services.AddSingleton<ISectionRepository, SectionRepository>();
+builder.Services.AddSingleton<ITaskRepository, TaskRepository>();
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<IStatusHistoryRepository, StatusHistoryRepository>();
+builder.Services.AddSingleton<IBoardRepository, BoardRepository>();
+builder.Services.AddSingleton<IBoardBusiness, BoardBusiness>();
+builder.Services.AddSingleton<IUserBusiness, UserBusiness>();
+builder.Services.AddSingleton<ITaskBusiness, TaskBusiness>();
+builder.Services.AddSingleton<IStatusHistoryBusiness, StatusHistoryBusiness>();
+builder.Services.AddSingleton<ICommentBusiness, CommentBusiness>();
+builder.Services.AddSingleton<ISectionBusiness, SectionBusiness>();
 
 var app = builder.Build();
 
