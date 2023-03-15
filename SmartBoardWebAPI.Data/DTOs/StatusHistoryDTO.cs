@@ -5,8 +5,9 @@ namespace SmartBoardWebAPI.Data.DTOs
 	{
 		public UserDTO User { get; set; }
 		public SectionDTO PreviousSection { get; set; }
-        public SectionDTO ActualSection { get; set; }
-        public DateTime DateModified { get; set; }
+		public SectionDTO ActualSection { get; set; }
+		public DateTime DateModified { get; set; }
+		public long TaskId { get; set; }
     }
 }
 
