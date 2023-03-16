@@ -19,6 +19,13 @@ namespace SmartBoardWebAPI.Business
         Task<List<UserDTO>> GetUsersAsync();
 
         /// <summary>
+        /// Get user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<UserDTO> GetUserByIdAsync(long id);
+
+        /// <summary>
         /// Insert new user
         /// </summary>
         /// <param name="user"></param>
