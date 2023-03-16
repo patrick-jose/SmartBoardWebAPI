@@ -40,9 +40,9 @@ namespace SmartTaskWebAPI.Controllers
         /// </summary>
         /// <returns>List<TaskModel></returns>
         [HttpGet("GetAllTasksBySectionId/")]
-        public async Task<List<TaskDTO>> GetAllTasksBySectionId(long taskId)
+        public async Task<List<TaskDTO>> GetAllTasksBySectionId(long sectionId)
         {
-            return await _taskBusiness.GetTaskBySectionIdAsync(taskId);
+            return await _taskBusiness.GetTaskBySectionIdAsync(sectionId);
         }
 
         /// <summary>
@@ -60,9 +60,9 @@ namespace SmartTaskWebAPI.Controllers
         /// </summary>
         /// <returns>List<TaskModel></returns>
         [HttpGet("GetAllActiveTasksBySectionId/")]
-        public async Task<List<TaskDTO>> GetAllActiveTasksBySectionId(long taskId)
+        public async Task<List<TaskDTO>> GetAllActiveTasksBySectionId(long sectionId)
         {
-            return await _taskBusiness.GetActiveTaskBySectionIdAsync(taskId);
+            return await _taskBusiness.GetActiveTaskBySectionIdAsync(sectionId);
         }
 
         /// <summary>
