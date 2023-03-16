@@ -27,7 +27,7 @@ namespace SmartBoardWebAPI.Data.DTOs
         [JsonRequired]
         [JsonPropertyName("blocked")]
         public bool Blocked { get; set; }
-        [JsonPropertyName("assigneeid")]
+        [JsonPropertyName("assigneeId")]
         public long? AssigneeId { get; set; }
         [JsonRequired]
         [JsonPropertyName("position")]
