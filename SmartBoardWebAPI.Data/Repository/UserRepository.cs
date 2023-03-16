@@ -64,10 +64,10 @@ namespace SmartBoardWebAPI.Data.Repository
             try
             {
                 string commandText = @$"select * from smartboard.user u
-                                        where u.id = @id
+                                        where u.name = @name
                                         and u.password = @password";
 
-                var queryArgs = new { id = dto.Id, password };
+                var queryArgs = new { name = dto.Name, password };
 
                 var user = await _dbConnection.connection.QueryFirstOrDefaultAsync<UserModel>(commandText, queryArgs);
 

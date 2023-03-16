@@ -48,13 +48,13 @@ namespace SmartUserWebAPI.Controllers
         /// <summary>
         /// Check login credentials
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns>bool</returns>
         [HttpGet("CheckCredentials/")]
-        public async Task<bool> CheckCredentials(long userId, string password)
+        public async Task<bool> CheckCredentials(string userName, string password)
         {
-            return await _userBusiness.CheckCredentialsAsync(new UserDTO() { Id = userId }, password);
+            return await _userBusiness.CheckCredentialsAsync(new UserDTO() { Name = userName }, password);
         }
 
         /// <summary>
