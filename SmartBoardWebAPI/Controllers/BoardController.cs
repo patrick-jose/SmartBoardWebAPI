@@ -33,20 +33,31 @@ namespace SmartBoardWebAPI.Controllers
         /// <param name="filled"></param>
         /// <returns>List<BoardDTO></returns>
         [HttpGet("GetAllActiveBoards/")]
-        public async Task<List<BoardDTO>> GetAllActiveBoardsFilled(bool filled)
+        public async Task<List<BoardDTO>> GetAllActiveBoards()
         {
-            return await _boardBusiness.GetActiveBoardsAsync(filled);
+            return await _boardBusiness.GetActiveBoardsAsync();
         }
 
         /// <summary>
-        /// Get all active boards
+        /// update board
         /// </summary>
-        /// <param name="filled"></param>
-        /// <returns>List<BoardModel></returns>
-        [HttpGet("GetAllActiveBoardsModel/")]
-        public async Task<IEnumerable<BoardModel>> GetAllActiveBoardsModelFilled(bool filled)
+        /// <param name="board"></param>
+        /// <returns></returns>
+        [HttpPut()]
+        public async Task PutBoard(BoardDTO board)
         {
-            return await _boardBusiness.GetActiveBoardsModelAsync(filled);
+            await _boardBusiness.PutBoardAsync(board);
+        }
+
+        /// <summary>
+        /// Insert new board
+        /// </summary>
+        /// <param name="board"></param>
+        /// <returns></returns>
+        [HttpPost()]
+        public async Task PostBoard([FromBody]BoardDTO board)
+        {
+            await _boardBusiness.PostBoardAsync(board);
         }
     }
 }

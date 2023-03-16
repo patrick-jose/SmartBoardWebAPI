@@ -8,38 +8,54 @@ namespace SmartBoardWebAPI.Business
         /// Get active sections by board id
         /// </summary>
         /// <param name="sectionId"></param>
-        /// <param name="filled"></param>
         /// <returns>List<SectionDTO></returns>
-        Task<List<SectionDTO>> GetActiveSectionsByBoardIdAsync(long sectionId, bool filled);
+        Task<List<SectionDTO>> GetActiveSectionsByBoardIdAsync(long sectionId);
 
         /// <summary>
         /// Get all active sections
         /// </summary>
-        /// <param name="filled"></param>
         /// <returns>List<SectionDTO></returns>
-        Task<List<SectionDTO>> GetActiveSectionsAsync(bool filled);
+        Task<List<SectionDTO>> GetActiveSectionsAsync();
 
         /// <summary>
         /// Get sections by board id
         /// </summary>
         /// <param name="sectionId"></param>
-        /// <param name="filled"></param>
         /// <returns></returns>
-        Task<List<SectionDTO>> GetSectionsByBoardIdAsync(long sectionId, bool filled);
+        Task<List<SectionDTO>> GetSectionsByBoardIdAsync(long sectionId);
 
         /// <summary>
         /// Get section by id
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="filled"></param>
         /// <returns>SectionDTO</returns>
-        Task<SectionDTO> GetSectionByIdAsync(long id, bool filled);
+        Task<SectionDTO> GetSectionByIdAsync(long id);
 
         /// <summary>
         /// Get all sections
         /// </summary>
-        /// <param name="filled"></param>
         /// <returns>List<SectionDTO></returns>
-        Task<List<SectionDTO>> GetSectionsAsync(bool filled);
+        Task<List<SectionDTO>> GetSectionsAsync();
+
+        /// <summary>
+        /// Insert new section
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
+        Task PostSectionAsync(SectionDTO section);
+
+        /// <summary>
+        /// Update a section
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
+        Task PutSectionAsync(SectionDTO section);
+
+        /// <summary>
+        /// Update multiple sections
+        /// </summary>
+        /// <param name="sections"></param>
+        /// <returns></returns>
+        Task PutSectionsAsync(List<SectionDTO> sections);
     }
 }
