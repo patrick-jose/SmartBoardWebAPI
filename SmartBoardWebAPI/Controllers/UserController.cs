@@ -39,7 +39,7 @@ namespace SmartUserWebAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("GetAllUsers/")]
+        [HttpGet("")]
         public async Task<UserDTO> GetUserById(long id)
         {
             return await _userBusiness.GetUserByIdAsync(id);
