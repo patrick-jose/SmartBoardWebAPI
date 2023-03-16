@@ -60,6 +60,7 @@ namespace SmartBoardWebAPI.Data.Models
                 Description = this.Description,
                 StatusHistory = statusHistoryDTOList,
                 SectionId = this.SectionId
+                TaskId = this.Task.Id
             };
 
             return dto;

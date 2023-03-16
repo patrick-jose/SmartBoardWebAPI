@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/SmartBoardWebAPI.Utils.csproj": {}
+    "/Users/patrick/Documents/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/SmartBoardWebAPI.Utils.csproj": {}
   },
   "projects": {
-    "/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/SmartBoardWebAPI.Utils.csproj": {
+    "/Users/patrick/Documents/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/SmartBoardWebAPI.Utils.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/SmartBoardWebAPI.Utils.csproj",
+        "projectUniqueName": "/Users/patrick/Documents/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/SmartBoardWebAPI.Utils.csproj",
         "projectName": "SmartBoardWebAPI.Utils",
-        "projectPath": "/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/SmartBoardWebAPI.Utils.csproj",
+        "projectPath": "/Users/patrick/Documents/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/SmartBoardWebAPI.Utils.csproj",
         "packagesPath": "/Users/patrick/.nuget/packages/",
-        "outputPath": "/Users/patrick/Library/CloudStorage/OneDrive-Pessoal/Documentos/Trabalhos/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/obj/",
+        "outputPath": "/Users/patrick/Documents/Smart Board/SmartBoardWebAPI/SmartBoardWebAPI.Utils/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/patrick/.nuget/NuGet/NuGet.Config"
