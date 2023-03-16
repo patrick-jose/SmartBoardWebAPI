@@ -44,9 +44,11 @@ namespace SmartBoardWebAPI.Controllers
         /// <param name="board"></param>
         /// <returns></returns>
         [HttpPut()]
-        public async Task PutBoard(BoardDTO board)
+        public async Task<ActionResult> PutBoard(BoardDTO board)
         {
             await _boardBusiness.PutBoardAsync(board);
+
+            return Ok();
         }
 
         /// <summary>
@@ -55,9 +57,11 @@ namespace SmartBoardWebAPI.Controllers
         /// <param name="board"></param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task PostBoard([FromBody]BoardDTO board)
+        public async Task<ActionResult> PostBoard([FromBody]BoardDTO board)
         {
             await _boardBusiness.PostBoardAsync(board);
+
+            return Ok();
         }
     }
 }

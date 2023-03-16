@@ -8,38 +8,54 @@ namespace SmartBoardWebAPI.Business
         /// Get all task by section
         /// </summary>
         /// <param name="sectionId"></param>
-        /// <param name="filled"></param>
         /// <returns>List<TaskDTO></returns>
-        Task<List<TaskDTO>> GetTaskBySectionIdAsync(long sectionId, bool filled);
+        Task<List<TaskDTO>> GetTaskBySectionIdAsync(long sectionId);
 
         /// <summary>
         /// Get all tasks
         /// </summary>
-        /// <param name="filled"></param>
         /// <returns>List<TaskDTO></returns>
-        Task<List<TaskDTO>> GetTasksAsync(bool filled);
+        Task<List<TaskDTO>> GetTasksAsync();
 
         /// <summary>
         /// Get all active task by section
         /// </summary>
         /// <param name="sectionId"></param>
-        /// <param name="filled"></param>
         /// <returns>List<TaskDTO></returns>
-        Task<List<TaskDTO>> GetActiveTaskBySectionIdAsync(long sectionId, bool filled);
+        Task<List<TaskDTO>> GetActiveTaskBySectionIdAsync(long sectionId);
 
         /// <summary>
         /// Get all active tasks
         /// </summary>
-        /// <param name="filled"></param>
         /// <returns>List<TaskDTO></returns>
-        Task<List<TaskDTO>> GetActiveTasksAsync(bool filled);
+        Task<List<TaskDTO>> GetActiveTasksAsync();
 
         /// <summary>
         /// Get task by id
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="filled"></param>
         /// <returns>TaskDTO</returns>
-        Task<TaskDTO> GetTaskByIdAsync(long id, bool filled);
+        Task<TaskDTO> GetTaskByIdAsync(long id);
+
+        /// <summary>
+        /// Insert new task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        Task PostTaskAsync(TaskDTO task);
+
+        /// <summary>
+        /// Update task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        Task PutTaskAsync(TaskDTO task);
+
+        /// <summary>
+        /// Update multiple tasks
+        /// </summary>
+        /// <param name="tasks"></param>
+        /// <returns></returns>
+        Task PutTasksAsync(List<TaskDTO> tasks);
     }
 }

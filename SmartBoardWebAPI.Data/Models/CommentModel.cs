@@ -13,19 +13,15 @@ namespace SmartBoardWebAPI.Data.Models
 		public string Content { get; set; }
 		public DateTime DateCreation { get; set; }
 
-        public async Task<CommentDTO> ToDTO(IUserRepository userRepository)
+        public async Task<CommentDTO> ToDTO()
         {
-            var writer = await userRepository.GetUserByIdAsync(this.WriterId);
-
-            if (writer == null)
-                writer = new UserModel();
-
             var dto = new CommentDTO()
             {
                 Content = this.Content,
                 DateCreation = this.DateCreation,
-                Writer = writer.ToDTO(),
-                Id = this.Id
+                WriterId = this.WriterId,
+                Id = this.Id,
+                TaskId = this.TaskId
             };
 
             return dto;

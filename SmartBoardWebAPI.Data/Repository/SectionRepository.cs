@@ -10,16 +10,14 @@ namespace SmartBoardWebAPI.Data.Repository
     {
         private readonly ILogWriter _log;
         private readonly DbConnection _dbConnection;
-        private readonly ITaskRepository _taskRepository;
 
-        public SectionRepository(ILogWriter log, ITaskRepository taskRepository)
+        public SectionRepository(ILogWriter log)
         {
             _log = log;
             _dbConnection = new DbConnection(_log);
-            _taskRepository = taskRepository;
         }
 
-        public async Task<IEnumerable<SectionModel>> GetSectionsAsync(bool filled)
+        public async Task<IEnumerable<SectionModel>> GetSectionsAsync()
         {
             try
             {
@@ -27,12 +25,6 @@ namespace SmartBoardWebAPI.Data.Repository
                                         order by s.position asc";
 
                 var sections = await _dbConnection.connection.QueryAsync<SectionModel>(commandText);
-
-                if (filled)
-                {
-                    foreach (var section in sections)
-                        section.Tasks = await _taskRepository.GetActiveTasksBySectionIdAsync(section.Id, filled);
-                }
 
                 _dbConnection.CloseConnection();
 
@@ -45,7 +37,7 @@ namespace SmartBoardWebAPI.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<SectionModel>> GetActiveSectionsAsync(bool filled)
+        public async Task<IEnumerable<SectionModel>> GetActiveSectionsAsync()
         {
             try
             {
@@ -55,12 +47,6 @@ namespace SmartBoardWebAPI.Data.Repository
 
                 var sections = await _dbConnection.connection.QueryAsync<SectionModel>(commandText);
 
-                if (filled)
-                {
-                    foreach (var section in sections)
-                        section.Tasks = await _taskRepository.GetActiveTasksBySectionIdAsync(section.Id, filled);
-                }
-
                 _dbConnection.CloseConnection();
 
                 return sections;
@@ -72,7 +58,7 @@ namespace SmartBoardWebAPI.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<SectionModel>> GetSectionsByBoardIdAsync(long boardId, bool filled)
+        public async Task<IEnumerable<SectionModel>> GetSectionsByBoardIdAsync(long boardId)
         {
             try
             {
@@ -84,12 +70,6 @@ namespace SmartBoardWebAPI.Data.Repository
 
                 var sections = await _dbConnection.connection.QueryAsync<SectionModel>(commandText, queryArgs);
 
-                if (filled)
-                {
-                    foreach (var section in sections)
-                        section.Tasks = await _taskRepository.GetActiveTasksBySectionIdAsync(section.Id, filled);
-                }
-
                 _dbConnection.CloseConnection();
 
                 return sections;
@@ -101,7 +81,7 @@ namespace SmartBoardWebAPI.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<SectionModel>> GetActiveSectionsByBoardIdAsync(long boardId, bool filled)
+        public async Task<IEnumerable<SectionModel>> GetActiveSectionsByBoardIdAsync(long boardId)
         {
             try
             {
@@ -114,12 +94,6 @@ namespace SmartBoardWebAPI.Data.Repository
 
                 var sections = await _dbConnection.connection.QueryAsync<SectionModel>(commandText, queryArgs);
 
-                if (filled)
-                {
-                    foreach (var section in sections)
-                        section.Tasks = await _taskRepository.GetActiveTasksBySectionIdAsync(section.Id, filled);
-                }
-
                 _dbConnection.CloseConnection();
 
                 return sections;
@@ -131,7 +105,7 @@ namespace SmartBoardWebAPI.Data.Repository
             }
         }
 
-        public async Task<SectionModel> GetSectionByIdAsync(long id, bool filled)
+        public async Task<SectionModel> GetSectionByIdAsync(long id)
         {
             try
             {
@@ -141,9 +115,6 @@ namespace SmartBoardWebAPI.Data.Repository
                 var queryArgs = new { id };
 
                 var section = await _dbConnection.connection.QueryFirstOrDefaultAsync<SectionModel>(commandText);
-
-                if (filled)
-                    section.Tasks = await _taskRepository.GetActiveTasksBySectionIdAsync(section.Id, filled);
 
                 _dbConnection.CloseConnection();
 

@@ -34,5 +34,8 @@
     <ProjectReference Include="..\SmartBoardWebAPI.Utils\SmartBoardWebAPI.Utils.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\PublishMessages\PublishMessages.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

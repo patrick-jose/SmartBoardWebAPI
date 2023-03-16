@@ -10,5 +10,12 @@ namespace SmartBoardWebAPI.Business
         /// <param name="taskId"></param>
         /// <returns>List<StatusHistoryDTO></returns>
         Task<List<StatusHistoryDTO>> GetStatusHistoryByTaskIdAsync(long taskId);
+
+        /// <summary>
+        /// Insert new Status History
+        /// </summary>
+        /// <param name="statusHistory"></param>
+        /// <returns></returns>
+        Task PostStatusHistoryAsync(StatusHistoryDTO statusHistory);
     }
 }

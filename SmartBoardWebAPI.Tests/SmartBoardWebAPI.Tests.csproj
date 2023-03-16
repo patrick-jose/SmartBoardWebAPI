@@ -21,6 +21,7 @@
     <ProjectReference Include="..\SmartBoardWebAPI.Utils\SmartBoardWebAPI.Utils.csproj" />
     <ProjectReference Include="..\SmartBoardWebAPI.Data\SmartBoardWebAPI.Data.csproj" />
     <ProjectReference Include="..\SmartBoard.Business\SmartBoardWebAPI.Business.csproj" />
+    <ProjectReference Include="..\PublishMessages\PublishMessages.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Repository\" />

@@ -1,11 +1,18 @@
 ﻿using System;
+using System.Text.Json.Serialization;
+
 namespace SmartBoardWebAPI.Data.DTOs
 {
 	public class UserDTO
 	{
-		public long Id { get; set; }
-		public string Name { get; set; }
-		public string Password { get; set; }
+        [JsonPropertyName("id")]
+        public long Id { get; set; }
+        [JsonRequired]
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonRequired]
+        [JsonPropertyName("password")]
+        public string Password { get; set; }
     }
 }
 

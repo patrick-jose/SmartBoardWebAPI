@@ -29,9 +29,9 @@ namespace SmartsectionWebAPI.Controllers
         /// </summary>
         /// <returns>List<SectionDTO></returns>
         [HttpGet("GetAllSections/")]
-        public async Task<List<SectionDTO>> GetAllSections(bool filled)
+        public async Task<List<SectionDTO>> GetAllSections()
         {
-            return await _sectionBusiness.GetSectionsAsync(filled);
+            return await _sectionBusiness.GetSectionsAsync();
         }
 
         /// <summary>
@@ -39,9 +39,9 @@ namespace SmartsectionWebAPI.Controllers
         /// </summary>
         /// <returns>List<SectionModel></returns>
         [HttpGet("GetAllSectionsByBoardId/")]
-        public async Task<List<SectionDTO>> GetAllSectionsByBoardId(long boardId, bool filled)
+        public async Task<List<SectionDTO>> GetAllSectionsByBoardId(long boardId)
         {
-            return await _sectionBusiness.GetSectionsByBoardIdAsync(boardId, filled);
+            return await _sectionBusiness.GetSectionsByBoardIdAsync(boardId);
         }
 
         /// <summary>
@@ -49,9 +49,9 @@ namespace SmartsectionWebAPI.Controllers
         /// </summary>
         /// <returns>List<SectionDTO></returns>
         [HttpGet("GetAllActiveSections/")]
-        public async Task<List<SectionDTO>> GetAllActiveSections(bool filled)
+        public async Task<List<SectionDTO>> GetAllActiveSections()
         {
-            return await _sectionBusiness.GetActiveSectionsAsync(filled);
+            return await _sectionBusiness.GetActiveSectionsAsync();
         }
 
         /// <summary>
@@ -59,9 +59,9 @@ namespace SmartsectionWebAPI.Controllers
         /// </summary>
         /// <returns>List<sectionModel></returns>
         [HttpGet("GetAllActiveSectionsByBoardId/")]
-        public async Task<List<SectionDTO>> GetAllActivesectionsByBoardId(long boardId, bool filled)
+        public async Task<List<SectionDTO>> GetAllActivesectionsByBoardId(long boardId)
         {
-            return await _sectionBusiness.GetActiveSectionsByBoardIdAsync(boardId, filled);
+            return await _sectionBusiness.GetActiveSectionsByBoardIdAsync(boardId);
         }
 
         /// <summary>
@@ -69,9 +69,48 @@ namespace SmartsectionWebAPI.Controllers
         /// </summary>
         /// <returns>SectionDTO</returns>
         [HttpGet("GetSectionById/")]
-        public async Task<SectionDTO> GetSectionById(long id, bool filled)
+        public async Task<SectionDTO> GetSectionById(long id)
         {
-            return await _sectionBusiness.GetSectionByIdAsync(id, filled);
+            return await _sectionBusiness.GetSectionByIdAsync(id);
+        }
+
+        /// <summary>
+        /// update section
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
+        [HttpPut()]
+        public async Task<ActionResult> PutSection(SectionDTO section)
+        {
+            await _sectionBusiness.PutSectionAsync(section);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Update multiple sections
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
+        [HttpPut("Multiple/")]
+        public async Task<ActionResult> PutSections(List<SectionDTO> section)
+        {
+            await _sectionBusiness.PutSectionsAsync(section);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Insert new section
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
+        [HttpPost()]
+        public async Task<ActionResult> PostSection([FromBody]SectionDTO section)
+        {
+            await _sectionBusiness.PostSectionAsync(section);
+
+            return Ok();
         }
     }
 }

@@ -1,3 +1,4 @@
+using PublishMessages;
 using SmartBoardWebAPI.Business;
 using SmartBoardWebAPI.Data.Repository;
 using SmartBoardWebAPI.Utils;
@@ -24,6 +25,8 @@ builder.Services.AddSingleton<ITaskBusiness, TaskBusiness>();
 builder.Services.AddSingleton<IStatusHistoryBusiness, StatusHistoryBusiness>();
 builder.Services.AddSingleton<ICommentBusiness, CommentBusiness>();
 builder.Services.AddSingleton<ISectionBusiness, SectionBusiness>();
+builder.Services.AddSingleton<ISectionBusiness, SectionBusiness>();
+builder.Services.AddSingleton<ISendService, SendService>();
 
 var app = builder.Build();
 

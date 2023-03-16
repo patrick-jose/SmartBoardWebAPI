@@ -30,19 +30,19 @@ namespace SmartTaskWebAPI.Controllers
         /// </summary>
         /// <returns>List<TaskDTO></returns>
         [HttpGet("GetAllTasks/")]
-        public async Task<List<TaskDTO>> GetAllTasks(bool filled)
+        public async Task<List<TaskDTO>> GetAllTasks()
         {
-            return await _taskBusiness.GetTasksAsync(filled);
+            return await _taskBusiness.GetTasksAsync();
         }
 
         /// <summary>
-        /// Get all tasks by section
+        /// Get all tasks by task
         /// </summary>
         /// <returns>List<TaskModel></returns>
         [HttpGet("GetAllTasksBySectionId/")]
-        public async Task<List<TaskDTO>> GetAllTasksBySectionId(long sectionId, bool filled)
+        public async Task<List<TaskDTO>> GetAllTasksBySectionId(long taskId)
         {
-            return await _taskBusiness.GetTaskBySectionIdAsync(sectionId, filled);
+            return await _taskBusiness.GetTaskBySectionIdAsync(taskId);
         }
 
         /// <summary>
@@ -50,29 +50,68 @@ namespace SmartTaskWebAPI.Controllers
         /// </summary>
         /// <returns>List<TaskDTO></returns>
         [HttpGet("GetAllActiveTasks/")]
-        public async Task<List<TaskDTO>> GetAllActiveTasks(bool filled)
+        public async Task<List<TaskDTO>> GetAllActiveTasks()
         {
-            return await _taskBusiness.GetActiveTasksAsync(filled);
+            return await _taskBusiness.GetActiveTasksAsync();
         }
 
         /// <summary>
-        /// Get all active tasks by section
+        /// Get all active tasks by task
         /// </summary>
         /// <returns>List<TaskModel></returns>
         [HttpGet("GetAllActiveTasksBySectionId/")]
-        public async Task<List<TaskDTO>> GetAllActiveTasksBySectionId(long sectionId, bool filled)
+        public async Task<List<TaskDTO>> GetAllActiveTasksBySectionId(long taskId)
         {
-            return await _taskBusiness.GetActiveTaskBySectionIdAsync(sectionId, filled);
+            return await _taskBusiness.GetActiveTaskBySectionIdAsync(taskId);
         }
 
         /// <summary>
-        /// Get all active tasks by section
+        /// Get all active tasks by task
         /// </summary>
         /// <returns>List<TaskModel></returns>
         [HttpGet("GetTaskById/")]
-        public async Task<TaskDTO> GetTaskId(long id, bool filled)
+        public async Task<TaskDTO> GetTaskId(long id)
         {
-            return await _taskBusiness.GetTaskByIdAsync(id, filled);
+            return await _taskBusiness.GetTaskByIdAsync(id);
+        }
+
+        /// <summary>
+        /// Update task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        [HttpPut()]
+        public async Task<ActionResult> PutTask(TaskDTO task)
+        {
+            await _taskBusiness.PutTaskAsync(task);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Update tasks
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        [HttpPut("Multiple/")]
+        public async Task<ActionResult> PutTasks(List<TaskDTO> task)
+        {
+            await _taskBusiness.PutTasksAsync(task);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Insert new task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        [HttpPost()]
+        public async Task<ActionResult> PostTask([FromBody] TaskDTO task)
+        {
+            await _taskBusiness.PostTaskAsync(task);
+
+            return Ok();
         }
     }
 }

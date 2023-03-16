@@ -1,4 +1,6 @@
 ﻿using System;
+using PublishMessages;
+using System.Text.Json;
 using SmartBoardWebAPI.Data.DTOs;
 using SmartBoardWebAPI.Data.Repository;
 using SmartBoardWebAPI.Utils;
@@ -9,15 +11,13 @@ namespace SmartBoardWebAPI.Business
     {
         private readonly ILogWriter _log;
         private readonly IStatusHistoryRepository _statusHistoryRepository;
-        private readonly ISectionRepository _sectionRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly ISendService _sendService;
 
-        public StatusHistoryBusiness(ILogWriter log, IStatusHistoryRepository boardRepository, ISectionRepository sectionRepository, IUserRepository userRepository)
+        public StatusHistoryBusiness(ILogWriter log, IStatusHistoryRepository boardRepository, ISendService sendService)
         {
             _log = log;
             _statusHistoryRepository = boardRepository;
-            _userRepository = userRepository;
-            _sectionRepository = sectionRepository;
+            _sendService = sendService;
         }
 
         public async Task<List<StatusHistoryDTO>> GetStatusHistoryByTaskIdAsync(long taskId)
@@ -32,12 +32,34 @@ namespace SmartBoardWebAPI.Business
                 {
                     var itemDTO = new StatusHistoryDTO();
 
-                    itemDTO = await statusHistoryModel.ToDTO(_userRepository, _sectionRepository);
+                    itemDTO = await statusHistoryModel.ToDTO();
 
                     statusHistoryDTOList.Add(itemDTO);
                 }
 
                 return statusHistoryDTOList;
+            }
+            catch (Exception ex)
+            {
+                _log.LogWrite(ex.Message);
+                throw ex;
+            }
+        }
+
+        public async Task PostStatusHistoryAsync(StatusHistoryDTO statusHistory)
+        {
+            try
+            {
+                var json = JsonSerializer.Serialize<StatusHistoryDTO>(statusHistory);
+
+                var header = new Header()
+                {
+                    Element = ElementEnum.STATUSHISTORY,
+                    Multiple = false,
+                    TransactionType = TransactionTypeEnum.INSERT
+                };
+
+                await _sendService.SendMessage(json, header);
             }
             catch (Exception ex)
             {

@@ -10,28 +10,20 @@ namespace SmartBoardWebAPI.Data.Repository
     {
         private readonly ILogWriter _log;
         private readonly DbConnection _dbConnection;
-        private readonly ISectionRepository _sectionRepository;
 
-        public BoardRepository(ILogWriter log, ISectionRepository sectionRepository)
+        public BoardRepository(ILogWriter log)
         {
             _log = log;
             _dbConnection = new DbConnection(_log);
-            _sectionRepository = sectionRepository;
         }
 
-        public async Task<IEnumerable<BoardModel>> GetBoardsAsync(bool filled)
+        public async Task<IEnumerable<BoardModel>> GetBoardsAsync()
         {
             try
             {
                 string commandText = @$"select * from smartboard.board";
 
                 var boards = await _dbConnection.connection.QueryAsync<BoardModel>(commandText);
-
-                if (filled)
-                { 
-                    foreach (var board in boards)
-                        board.Sections = await _sectionRepository.GetSectionsByBoardIdAsync(board.Id, filled);
-                }
 
                 _dbConnection.CloseConnection();
 
@@ -44,19 +36,13 @@ namespace SmartBoardWebAPI.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<BoardModel>> GetActiveBoardsAsync(bool filled)
+        public async Task<IEnumerable<BoardModel>> GetActiveBoardsAsync()
         {
             try
             {
                 string commandText = @$"select * from smartboard.board b where b.active = true";
 
                 var boards = await _dbConnection.connection.QueryAsync<BoardModel>(commandText);
-
-                if (filled)
-                {
-                    foreach (var board in boards)
-                        board.Sections = await _sectionRepository.GetActiveSectionsByBoardIdAsync(board.Id, filled);
-                }
 
                 _dbConnection.CloseConnection();
 

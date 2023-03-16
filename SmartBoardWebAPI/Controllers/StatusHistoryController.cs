@@ -36,6 +36,19 @@ namespace SmartBoardWebAPI.Controllers
         {
             return await _statusHistoryBusiness.GetStatusHistoryByTaskIdAsync(taskId);
         }
+
+        /// <summary>
+        /// Insert new status history
+        /// </summary>
+        /// <param name="statusHistory"></param>
+        /// <returns>ActionResult</returns>
+        [HttpPost()]
+        public async Task<ActionResult> PostStatusHistoryAsync([FromBody] StatusHistoryDTO statusHistory)
+        {
+            await _statusHistoryBusiness.PostStatusHistoryAsync(statusHistory);
+
+            return Ok();
+        }
     }
 }
 

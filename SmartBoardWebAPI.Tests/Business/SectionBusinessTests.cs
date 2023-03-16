@@ -1,5 +1,7 @@
 ﻿using System.Reflection.Metadata;
+using PublishMessages;
 using SmartBoardWebAPI.Business;
+using SmartBoardWebAPI.Data.DTOs;
 using SmartBoardWebAPI.Data.Repository;
 using SmartBoardWebAPI.Utils;
 
@@ -15,174 +17,128 @@ public class SectionBusinessTests
     private ICommentRepository _commentRepository;
     private ITaskRepository _taskRepository;
     private IUserRepository _userRepository;
+    private ISendService _sendService;
 
-    [TestMethod]
-    public async Task GetSectionsFilledByBoardIdAsyncTest()
+    public void StartServices()
     {
         _log = new LogWriter();
+        _sendService = new SendService(_log);
         _statusHistoryRepository = new StatusHistoryRepository(_log);
         _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
+        _taskRepository = new TaskRepository(_log);
+        _sectionRepository = new SectionRepository(_log);
         _userRepository = new UserRepository(_log);
-        _sectionBusiness = new SectionBusiness(_log, _sectionRepository, _userRepository);
-
-        var result = await _sectionBusiness.GetSectionsByBoardIdAsync(2, true);
-
-        Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Tasks.Any());
+        _sectionBusiness = new SectionBusiness(_log, _sectionRepository, _sendService);
     }
 
     [TestMethod]
-    public async Task GetSectionsFilledAsyncTest()
+    public async Task GetSectionsByBoardIdAsyncTest()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _sectionBusiness = new SectionBusiness(_log, _sectionRepository, _userRepository);
+        StartServices();
 
-        var result = await _sectionBusiness.GetSectionsAsync(true);
+        var result = await _sectionBusiness.GetSectionsByBoardIdAsync(2);
 
         Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Tasks.Any());
     }
 
     [TestMethod]
-    public async Task GetSectionsNotFilledByBoardIdAsyncTest()
+    public async Task GetSectionsAsyncTest()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _sectionBusiness = new SectionBusiness(_log, _sectionRepository, _userRepository);
+        StartServices();
 
-        var result = await _sectionBusiness.GetSectionsByBoardIdAsync(1, false);
+        var result = await _sectionBusiness.GetSectionsAsync();
 
         Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Tasks.Count() == 0);
     }
 
     [TestMethod]
-    public async Task GetSectionsNotFilledAsyncTest()
+    public async Task GetActiveSectionsByBoardIdAsyncTest()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _sectionBusiness = new SectionBusiness(_log, _sectionRepository, _userRepository);
+        StartServices();
 
-        var result = await _sectionBusiness.GetSectionsAsync(false);
+        var result = await _sectionBusiness.GetActiveSectionsByBoardIdAsync(2);
 
         Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Tasks.Count() == 0);
     }
 
     [TestMethod]
-    public async Task GetActiveSectionsFilledByBoardIdAsyncTest()
+    public async Task GetActiveSectionsAsyncTest()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _sectionBusiness = new SectionBusiness(_log, _sectionRepository, _userRepository);
+        StartServices();
 
-        var result = await _sectionBusiness.GetActiveSectionsByBoardIdAsync(2, true);
+        var result = await _sectionBusiness.GetActiveSectionsAsync();
 
         Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Tasks.Any());
     }
 
     [TestMethod]
-    public async Task GetActiveSectionsFilledAsyncTest()
+    public async Task GetSectionByIdAsyncTest()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _sectionBusiness = new SectionBusiness(_log, _sectionRepository, _userRepository);
+        StartServices();
 
-        var result = await _sectionBusiness.GetActiveSectionsAsync(true);
-
-        Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Tasks.Any());
-    }
-
-    [TestMethod]
-    public async Task GetActiveSectionsNotFilledBySectionIdAsyncTest()
-    {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _sectionBusiness = new SectionBusiness(_log, _sectionRepository, _userRepository);
-
-        var result = await _sectionBusiness.GetActiveSectionsByBoardIdAsync(1, false);
-
-        Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Tasks.Count() == 0);
-    }
-
-    [TestMethod]
-    public async Task GetActiveSectionsNotFilledAsyncTest()
-    {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _sectionBusiness = new SectionBusiness(_log, _sectionRepository, _userRepository);
-
-        var result = await _sectionBusiness.GetActiveSectionsAsync(false);
-
-        Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Tasks.Count() == 0);
-    }
-
-    [TestMethod]
-    public async Task GetSectionNotFilledByIdAsyncTest()
-    {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _sectionBusiness = new SectionBusiness(_log, _sectionRepository, _userRepository);
-
-        var result = await _sectionBusiness.GetSectionByIdAsync(2, false);
+        var result = await _sectionBusiness.GetSectionByIdAsync(18);
 
         Assert.IsNotNull(result);
-        Assert.IsTrue(result.Tasks.Count() == 0);
     }
 
     [TestMethod]
-    public async Task GetSectionFilledByIdAsyncTest()
+    public async Task PostSectionAsyncTests()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _sectionBusiness = new SectionBusiness(_log, _sectionRepository, _userRepository);
+        StartServices();
 
-        var result = await _sectionBusiness.GetSectionByIdAsync(18, true);
+        var dto = new SectionDTO()
+        {
+            Name = "Teste integração WebAPI",
+            Active = true,
+            Position = 1,
+            BoardId = 1
+        };
 
-        Assert.IsNotNull(result);
-        Assert.IsTrue(result.Tasks.Any());
+        await _sectionBusiness.PostSectionAsync(dto);
+    }
+
+    [TestMethod]
+    public async Task PutSectionAsyncTests()
+    {
+        StartServices();
+
+        var dto = new SectionDTO()
+        {
+            Id = 3,
+            Name = "Teste integração update WebAPI",
+            Active = false
+        };
+
+        await _sectionBusiness.PutSectionAsync(dto);
+    }
+
+    [TestMethod]
+    public async Task PutSectionsAsyncTests()
+    {
+        StartServices();
+
+        var dto1 = new SectionDTO()
+        {
+            Id = 11,
+            Name = "Teste integração update WebAPI",
+            Active = true,
+            Position = 1,
+            BoardId = 3
+        };
+        var dto2 = new SectionDTO()
+        {
+            Id = 12,
+            Name = "Teste integração update WebAPI",
+            Active = true,
+            Position = 2,
+            BoardId = 3
+        };
+
+        var list = new List<SectionDTO>();
+
+        list.Add(dto1);
+        list.Add(dto2);
+
+        await _sectionBusiness.PutSectionsAsync(list);
     }
 }

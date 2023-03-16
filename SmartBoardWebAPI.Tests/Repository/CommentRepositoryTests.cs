@@ -10,11 +10,16 @@ public class CommentRepositoryTests
     private ICommentRepository _commentRepository;
     private ILogWriter _log;
 
-    [TestMethod]
-    public async Task GetCommentsAsyncTest()
+    private void StartServices()
     {
         _log = new LogWriter();
         _commentRepository = new CommentRepository(_log);
+    }
+
+    [TestMethod]
+    public async Task GetCommentsAsyncTest()
+    {
+        StartServices();
 
         var result = await _commentRepository.GetCommentsAsync();
 
@@ -24,8 +29,7 @@ public class CommentRepositoryTests
     [TestMethod]
     public async Task GetCommentsBySectionIdAsyncTest()
     {
-        _log = new LogWriter();
-        _commentRepository = new CommentRepository(_log);
+        StartServices();
 
         var result = await _commentRepository.GetCommentsByTaskIdAsync(2);
 

@@ -8,73 +8,31 @@ namespace SmartBoardWebAPI.Tests.Repository;
 public class BoardRepositoryTests
 {
     private IBoardRepository _boardRepository;
-    private ISectionRepository _sectionRepository;
-    private ITaskRepository _taskRepository;
-    private ICommentRepository _commentRepository;
-    private IStatusHistoryRepository _statusHistoryRepository;
     private ILogWriter _log;
 
-    [TestMethod]
-    public async Task GetBoardsFilledAsyncTest()
+    private void StarServices()
     {
         _log = new LogWriter();
-        _commentRepository = new CommentRepository(_log);
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _boardRepository = new BoardRepository(_log, _sectionRepository);
-
-        var result = await _boardRepository.GetBoardsAsync(true);
-
-        Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Sections.Any());
+        _boardRepository = new BoardRepository(_log);
     }
 
     [TestMethod]
-    public async Task GetBoardsNotFilledAsyncTest()
+    public async Task GetBoardsAsyncTest()
     {
-        _log = new LogWriter();
-        _commentRepository = new CommentRepository(_log);
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _boardRepository = new BoardRepository(_log, _sectionRepository);
+        StarServices();
 
-        var result = await _boardRepository.GetBoardsAsync(false);
+        var result = await _boardRepository.GetBoardsAsync();
 
         Assert.IsTrue(result.Any());
-        Assert.IsNull(result.First().Sections);
     }
 
     [TestMethod]
-    public async Task GetActiveBoardsFilledAsyncTest()
+    public async Task GetActiveBoardsAsyncTest()
     {
-        _log = new LogWriter();
-        _commentRepository = new CommentRepository(_log);
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _boardRepository = new BoardRepository(_log, _sectionRepository);
+        StarServices();
 
-        var result = await _boardRepository.GetActiveBoardsAsync(true);
+        var result = await _boardRepository.GetActiveBoardsAsync();
 
         Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Sections.Any());
-    }
-
-    [TestMethod]
-    public async Task GetActiveBoardsNotFilledAsyncTest()
-    {
-        _log = new LogWriter();
-        _commentRepository = new CommentRepository(_log);
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _boardRepository = new BoardRepository(_log, _sectionRepository);
-
-        var result = await _boardRepository.GetActiveBoardsAsync(false);
-
-        Assert.IsTrue(result.Any());
-        Assert.IsNull(result.First().Sections);
     }
 }

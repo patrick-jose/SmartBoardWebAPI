@@ -351,3 +351,5 @@ MigrationBackup/
 .DS_Store
 db/.DS_Store
 SmartBoardWebAPI.Data/.DS_Store
+.DS_Store
+.DS_Store

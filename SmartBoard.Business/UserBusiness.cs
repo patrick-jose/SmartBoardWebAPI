@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.Json;
+using PublishMessages;
 using SmartBoardWebAPI.Data.DTOs;
 using SmartBoardWebAPI.Data.Repository;
 using SmartBoardWebAPI.Utils;
@@ -9,11 +11,13 @@ namespace SmartBoardWebAPI.Business
     {
         private readonly ILogWriter _log;
         private readonly IUserRepository _userRepository;
+        private readonly ISendService _sendService;
 
-        public UserBusiness(ILogWriter log, IUserRepository boardRepository)
+        public UserBusiness(ILogWriter log, IUserRepository boardRepository, ISendService sendService)
         {
             _log = log;
             _userRepository = boardRepository;
+            _sendService = sendService;
         }
 
         public async Task<bool> CheckCredentialsAsync(UserDTO userDTO, string password)
@@ -47,6 +51,50 @@ namespace SmartBoardWebAPI.Business
                 }
 
                 return userDTOList;
+            }
+            catch (Exception ex)
+            {
+                _log.LogWrite(ex.Message);
+                throw ex;
+            }
+        }
+
+        public async Task PostUserAsync(UserDTO user)
+        {
+            try
+            {
+                var json = JsonSerializer.Serialize<UserDTO>(user);
+
+                var header = new Header()
+                {
+                    Element = ElementEnum.USER,
+                    Multiple = false,
+                    TransactionType = TransactionTypeEnum.INSERT
+                };
+
+                await _sendService.SendMessage(json, header);
+            }
+            catch (Exception ex)
+            {
+                _log.LogWrite(ex.Message);
+                throw ex;
+            }
+        }
+
+        public async Task PutUserAsync(UserDTO user)
+        {
+            try
+            {
+                var json = JsonSerializer.Serialize<UserDTO>(user);
+
+                var header = new Header()
+                {
+                    Element = ElementEnum.USER,
+                    Multiple = false,
+                    TransactionType = TransactionTypeEnum.UPDATE
+                };
+
+                await _sendService.SendMessage(json, header);
             }
             catch (Exception ex)
             {

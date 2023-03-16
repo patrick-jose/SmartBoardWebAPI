@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmartBoardWebAPI.Data\SmartBoardWebAPI.Data.csproj" />
     <ProjectReference Include="..\SmartBoardWebAPI.Utils\SmartBoardWebAPI.Utils.csproj" />
-    <ProjectReference Include="..\PublishMessages\PublishMessages.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
   </ItemGroup>
 </Project>

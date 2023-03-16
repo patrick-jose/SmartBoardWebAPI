@@ -7,39 +7,34 @@ namespace SmartBoardWebAPI.Data.Repository
         /// <summary>
         /// Get all tasks registered in database
         /// </summary>
-        /// <param name="filled">Flag to return filled tasks</param>
         /// <returns>IEnumerable<TaskModel></returns>
-        Task<IEnumerable<TaskModel>> GetTasksAsync(bool filled);
+        Task<IEnumerable<TaskModel>> GetTasksAsync();
 
         /// <summary>
         /// Get tasks registered in database by sectionId
         /// </summary>
         /// <param name="sectionId"></param>
-        /// <param name="filled">Flag to return filled tasks</param>
         /// <returns>IEnumerable<TaskModel></returns>
-        Task<IEnumerable<TaskModel>> GetTasksBySectionIdAsync(long sectionId, bool filled);
+        Task<IEnumerable<TaskModel>> GetTasksBySectionIdAsync(long sectionId);
 
         /// <summary>
         /// Get active tasks registered in database by sectionId
         /// </summary>
         /// <param name="sectionId"></param>
-        /// <param name="filled">Flag to return filled tasks</param>
         /// <returns>IEnumerable<TaskModel></returns>
-        Task<IEnumerable<TaskModel>> GetActiveTasksBySectionIdAsync(long sectionId, bool filled);
+        Task<IEnumerable<TaskModel>> GetActiveTasksBySectionIdAsync(long sectionId);
 
         /// <summary>
         /// Get all tasks registered in database
         /// </summary>
-        /// <param name="filled">Flag to return filled tasks</param>
         /// <returns>IEnumerable<TaskModel></returns>
-        Task<IEnumerable<TaskModel>> GetActiveTasksAsync(bool filled);
+        Task<IEnumerable<TaskModel>> GetActiveTasksAsync();
 
         /// <summary>
         /// Get task registered in database
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="filled">Flag to return filled tasks</param>
         /// <returns>IEnumerable<TaskModel></returns>
-        Task<TaskModel> GetTaskByIdAsync(long id, bool filled);
+        Task<TaskModel> GetTaskByIdAsync(long id);
     }
 }

@@ -10,5 +10,12 @@ namespace SmartBoardWebAPI.Business
         /// <param name="taskId"></param>
         /// <returns>List<CommentDTO></returns>
         Task<List<CommentDTO>> GetCommentsByTaskIdAsync(long taskId);
+
+        /// <summary>
+        /// Insert new comment
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        Task PostCommentAsync(CommentDTO comment);
     }
 }

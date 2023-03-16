@@ -8,15 +8,21 @@ namespace SmartBoardWebAPI.Business
         /// <summary>
         /// Get all active boards
         /// </summary>
-        /// <param name="filled">Flag to get filled boards</param>
         /// <returns>IEnumerable<BoardModel></returns>
-        Task<List<BoardDTO>> GetActiveBoardsAsync(bool filled);
+        Task<List<BoardDTO>> GetActiveBoardsAsync();
 
         /// <summary>
-        /// Get all active boards as database model
+        /// Insert new board
         /// </summary>
-        /// <param name="filled">Flag to get filled boards</param>
-        /// <returns>IEnumerable<BoardModel></returns>
-        Task<IEnumerable<BoardModel>> GetActiveBoardsModelAsync(bool filled);
+        /// <param name="board"></param>
+        /// <returns></returns>
+        Task PostBoardAsync(BoardDTO board);
+
+        /// <summary>
+        /// Update board
+        /// </summary>
+        /// <param name="board"></param>
+        /// <returns></returns>
+        Task PutBoardAsync(BoardDTO board);
     }
 }

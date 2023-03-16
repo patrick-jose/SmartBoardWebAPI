@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.Json;
+using PublishMessages;
 using SmartBoardWebAPI.Data.DTOs;
 using SmartBoardWebAPI.Data.Models;
 using SmartBoardWebAPI.Data.Repository;
@@ -10,22 +12,23 @@ namespace SmartBoardWebAPI.Business
     {
         private readonly ILogWriter _log;
         private readonly IBoardRepository _boardRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly ISectionRepository _sectionRepository;
+        private readonly ISendService _sendService;
 
-        public BoardBusiness(ILogWriter log, IBoardRepository boardRepository, ISectionRepository sectionRepository, IUserRepository userRepository)
+        public BoardBusiness(
+            ILogWriter log,
+            IBoardRepository boardRepository,
+            ISendService sendService)
         {
             _log = log;
             _boardRepository = boardRepository;
-            _sectionRepository = sectionRepository;
-            _userRepository = userRepository;
+            _sendService = sendService;
         }
 
-        public async Task<List<BoardDTO>> GetActiveBoardsAsync(bool filled)
+        public async Task<List<BoardDTO>> GetActiveBoardsAsync()
         {
             try
             {
-                var boardModelEnumerable = await _boardRepository.GetActiveBoardsAsync(filled);
+                var boardModelEnumerable = await _boardRepository.GetActiveBoardsAsync();
 
                 var boardDTOList = new List<BoardDTO>();
 
@@ -33,7 +36,7 @@ namespace SmartBoardWebAPI.Business
                 {
                     var itemDTO = new BoardDTO();
 
-                    itemDTO = boardModel.ToDTO(_userRepository, _sectionRepository);
+                    itemDTO = boardModel.ToDTO();
 
                     boardDTOList.Add(itemDTO);
                 }
@@ -47,11 +50,42 @@ namespace SmartBoardWebAPI.Business
             }
         }
 
-        public async Task<IEnumerable<BoardModel>> GetActiveBoardsModelAsync(bool filled)
+        public async Task PostBoardAsync(BoardDTO board)
         {
             try
             {
-                return await _boardRepository.GetActiveBoardsAsync(filled);
+                var json = JsonSerializer.Serialize<BoardDTO>(board);
+
+                var header = new Header()
+                {
+                    Element = ElementEnum.BOARD,
+                    Multiple = false,
+                    TransactionType = TransactionTypeEnum.INSERT
+                };
+
+                await _sendService.SendMessage(json, header);
+            }
+            catch (Exception ex)
+            {
+                _log.LogWrite(ex.Message);
+                throw ex;
+            }
+        }
+
+        public async Task PutBoardAsync(BoardDTO board)
+        {
+            try
+            {
+                var json = JsonSerializer.Serialize<BoardDTO>(board);
+
+                var header = new Header()
+                {
+                    Element = ElementEnum.BOARD,
+                    Multiple = false,
+                    TransactionType = TransactionTypeEnum.UPDATE
+                };
+
+                await _sendService.SendMessage(json, header);
             }
             catch (Exception ex)
             {

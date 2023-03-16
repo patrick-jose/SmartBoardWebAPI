@@ -1,5 +1,7 @@
 ﻿using System.Reflection.Metadata;
+using PublishMessages;
 using SmartBoardWebAPI.Business;
+using SmartBoardWebAPI.Data.DTOs;
 using SmartBoardWebAPI.Data.Repository;
 using SmartBoardWebAPI.Utils;
 
@@ -15,184 +17,142 @@ public class TaskBusinessTests
     private ICommentRepository _commentRepository;
     private ISectionRepository _sectionRepository;
     private IUserRepository _userRepository;
+    private ISendService _sendService;
 
-    [TestMethod]
-    public async Task GetTasksFilledBySectionIdAsyncTest()
+    public void StartServices()
     {
         _log = new LogWriter();
+        _sendService = new SendService(_log);
         _statusHistoryRepository = new StatusHistoryRepository(_log);
         _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
+        _taskRepository = new TaskRepository(_log);
+        _sectionRepository = new SectionRepository(_log);
         _userRepository = new UserRepository(_log);
-        _taskBusiness = new TaskBusiness(_log, _taskRepository, _userRepository, _sectionRepository);
-
-        var result = await _taskBusiness.GetTaskBySectionIdAsync(2, true);
-
-        Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Comments.Any());
-        Assert.IsTrue(result.First().StatusHistory.Any());
+        _taskBusiness = new TaskBusiness(_log, _taskRepository, _sendService);
     }
 
     [TestMethod]
-    public async Task GetTasksFilledAsyncTest()
+    public async Task GetTasksBySectionIdAsyncTest()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _taskBusiness = new TaskBusiness(_log, _taskRepository, _userRepository, _sectionRepository);
+        StartServices();
 
-        var result = await _taskBusiness.GetTasksAsync(true);
+        var result = await _taskBusiness.GetTaskBySectionIdAsync(2);
 
         Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Comments.Any());
-        Assert.IsTrue(result.First().StatusHistory.Any());
     }
 
     [TestMethod]
-    public async Task GetTasksNotFilledBySectionIdAsyncTest()
+    public async Task GetTasksAsyncTest()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _taskBusiness = new TaskBusiness(_log, _taskRepository, _userRepository, _sectionRepository);
+        StartServices();
 
-        var result = await _taskBusiness.GetTaskBySectionIdAsync(1, false);
+        var result = await _taskBusiness.GetTasksAsync();
 
         Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Comments.Count() == 0);
-        Assert.IsTrue(result.First().StatusHistory.Count() == 0);
     }
 
     [TestMethod]
-    public async Task GetTasksNotFilledAsyncTest()
+    public async Task GetActiveTasksBySectionIdAsyncTest()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _taskBusiness = new TaskBusiness(_log, _taskRepository, _userRepository, _sectionRepository);
+        StartServices();
 
-        var result = await _taskBusiness.GetTasksAsync(false);
+        var result = await _taskBusiness.GetActiveTaskBySectionIdAsync(2);
 
         Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Comments.Count() == 0);
-        Assert.IsTrue(result.First().StatusHistory.Count() == 0);
     }
 
     [TestMethod]
-    public async Task GetActiveTasksFilledBySectionIdAsyncTest()
+    public async Task GetActiveTasksAsyncTest()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _taskBusiness = new TaskBusiness(_log, _taskRepository, _userRepository, _sectionRepository);
+        StartServices();
 
-        var result = await _taskBusiness.GetActiveTaskBySectionIdAsync(2, true);
+        var result = await _taskBusiness.GetActiveTasksAsync();
 
         Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Comments.Any());
-        Assert.IsTrue(result.First().StatusHistory.Any());
     }
 
     [TestMethod]
-    public async Task GetActiveTasksFilledAsyncTest()
+    public async Task GetTaskByIdAsyncTest()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _taskBusiness = new TaskBusiness(_log, _taskRepository, _userRepository, _sectionRepository);
+        StartServices();
 
-        var result = await _taskBusiness.GetActiveTasksAsync(true);
-
-        Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Comments.Any());
-        Assert.IsTrue(result.First().StatusHistory.Any());
-    }
-
-    [TestMethod]
-    public async Task GetActiveTasksNotFilledBySectionIdAsyncTest()
-    {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _taskBusiness = new TaskBusiness(_log, _taskRepository, _userRepository, _sectionRepository);
-
-        var result = await _taskBusiness.GetActiveTaskBySectionIdAsync(1, false);
-
-        Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Comments.Count() == 0);
-        Assert.IsTrue(result.First().StatusHistory.Count() == 0);
-    }
-
-    [TestMethod]
-    public async Task GetActiveTasksNotFilledAsyncTest()
-    {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _taskBusiness = new TaskBusiness(_log, _taskRepository, _userRepository, _sectionRepository);
-
-        var result = await _taskBusiness.GetActiveTasksAsync(false);
-
-        Assert.IsTrue(result.Any());
-        Assert.IsTrue(result.First().Comments.Count() == 0);
-        Assert.IsTrue(result.First().StatusHistory.Count() == 0);
-    }
-
-    [TestMethod]
-    public async Task GetTaskNotFilledByIdAsyncTest()
-    {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _taskBusiness = new TaskBusiness(_log, _taskRepository, _userRepository, _sectionRepository);
-
-        var result = await _taskBusiness.GetTaskByIdAsync(2, false);
+        var result = await _taskBusiness.GetTaskByIdAsync(18);
 
         Assert.IsNotNull(result);
-        Assert.IsTrue(result.Comments.Count() == 0);
-        Assert.IsTrue(result.StatusHistory.Count() == 0);
     }
 
     [TestMethod]
-    public async Task GetTaskFilledByIdAsyncTest()
+    public async Task SendInsertTaskTests()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
-        _commentRepository = new CommentRepository(_log);
-        _taskRepository = new TaskRepository(_log, _commentRepository, _statusHistoryRepository);
-        _sectionRepository = new SectionRepository(_log, _taskRepository);
-        _userRepository = new UserRepository(_log);
-        _taskBusiness = new TaskBusiness(_log, _taskRepository, _userRepository, _sectionRepository);
+        StartServices();
 
-        var result = await _taskBusiness.GetTaskByIdAsync(18, true);
+        var dto = new TaskDTO()
+        {
+            Name = "Teste integração insert WebAPI",
+            Active = true,
+            Description = "Teste integração insert WebAPI",
+            SectionId = 2,
+            Blocked = false,
+            AssigneeId = 1,
+            Position = 7,
+        };
 
-        Assert.IsNotNull(result);
-        Assert.IsTrue(result.Comments.Any());
-        Assert.IsTrue(result.StatusHistory.Any());
+        await _taskBusiness.PostTaskAsync(dto);
+    }
+
+    [TestMethod]
+    public async Task SendUpdateTaskTests()
+    {
+        StartServices();
+
+        var dto = new TaskDTO()
+        {
+            Id = 3,
+            Name = "Teste integração update WebAPI",
+            Active = true,
+            Description = "Teste integração update WebAPI",
+            SectionId = 2,
+            Blocked = false,
+            AssigneeId = 1,
+            Position = 4,
+        };
+
+        await _taskBusiness.PutTaskAsync(dto);
+    }
+
+    [TestMethod]
+    public async Task SendUpdateTasksTests()
+    {
+        StartServices();
+
+        var dto1 = new TaskDTO()
+        {
+            Id = 31,
+            Name = "Teste integração update WebAPI",
+            Active = true,
+            Description = "Teste integração update WebAPI",
+            SectionId = 10,
+            Blocked = false,
+            AssigneeId = 1,
+            Position = 1,
+        };
+        var dto2 = new TaskDTO()
+        {
+            Id = 32,
+            Name = "Teste integração update WebAPI",
+            Active = true,
+            Description = "Teste integração update WebAPI",
+            SectionId = 10,
+            Blocked = false,
+            AssigneeId = 1,
+            Position = 2,
+        };
+
+        var list = new List<TaskDTO>();
+
+        list.Add(dto1);
+        list.Add(dto2);
+
+        await _taskBusiness.PutTasksAsync(list);
     }
 }

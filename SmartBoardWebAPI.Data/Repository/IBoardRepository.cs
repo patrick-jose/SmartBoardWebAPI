@@ -7,15 +7,13 @@ namespace SmartBoardWebAPI.Data.Repository
         /// <summary>
         /// Get all boards with complete information
         /// </summary>
-        /// <param name="filled">Flag to get filled boards</param>
         /// <returns>IEnumerable<BoardModel></returns>
-        Task<IEnumerable<BoardModel>> GetBoardsAsync(bool filled);
+        Task<IEnumerable<BoardModel>> GetBoardsAsync();
 
         /// <summary>
         /// Get active boards with complete information
         /// </summary>
-        /// <param name="filled">Flag to get filled boards</param>
         /// <returns>IEnumerable<BoardModel></returns>
-        Task<IEnumerable<BoardModel>> GetActiveBoardsAsync(bool filled);
+        Task<IEnumerable<BoardModel>> GetActiveBoardsAsync();
     }
 }

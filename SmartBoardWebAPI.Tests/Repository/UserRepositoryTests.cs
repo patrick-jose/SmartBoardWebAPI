@@ -11,11 +11,16 @@ public class UserRepositoryTests
     private IUserRepository _userRepository;
     private ILogWriter _log;
 
-    [TestMethod]
-    public async Task GetUsersAsyncTest()
+    private void StartServices()
     {
         _log = new LogWriter();
         _userRepository = new UserRepository(_log);
+    }
+
+    [TestMethod]
+    public async Task GetUsersAsyncTest()
+    {
+        StartServices();
 
         var result = await _userRepository.GetUsersAsync();
 
@@ -25,19 +30,17 @@ public class UserRepositoryTests
     [TestMethod]
     public async Task GetUsersByIdAsyncTestResturnNothing()
     {
-        _log = new LogWriter();
-        _userRepository = new UserRepository(_log);
+        StartServices();
 
-        var result = await _userRepository.GetUserByIdAsync(3);
+        var result = await _userRepository.GetUserByIdAsync(999);
 
         Assert.IsNull(result);
     }
 
     [TestMethod]
-    public async Task GetUsersByIdAsyncTest()
+    public async Task GetUserByIdAsyncTest()
     {
-        _log = new LogWriter();
-        _userRepository = new UserRepository(_log);
+        StartServices();
 
         var result = await _userRepository.GetUserByIdAsync(2);
 
@@ -47,8 +50,7 @@ public class UserRepositoryTests
     [TestMethod]
     public async Task CheckCredentialsSucessTest()
     {
-        _log = new LogWriter();
-        _userRepository = new UserRepository(_log);
+        StartServices();
 
         var result = await _userRepository.CheckCredentialsAsync(new UserDTO() { Id = 1 }, "patrickpw");
 
@@ -59,8 +61,7 @@ public class UserRepositoryTests
     [TestMethod]
     public async Task CheckCredentialsFailureTest()
     {
-        _log = new LogWriter();
-        _userRepository = new UserRepository(_log);
+        StartServices();
 
         var result = await _userRepository.CheckCredentialsAsync(new UserDTO() { Id = 1 }, "patrickpu");
 

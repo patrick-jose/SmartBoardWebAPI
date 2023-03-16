@@ -30,11 +30,24 @@ namespace SmartBoardWebAPI.Controllers
         /// <summary>
         /// Get status history by task id
         /// </summary>
-        /// <returns>List<CommentDTO></returns>
+        /// <returns>ActionResult<List<CommentDTO>></returns>
         [HttpGet("GetCommentByTaskId/")]
-        public async Task<List<CommentDTO>> GetCommentsByTaskId(long taskId)
+        public async Task<ActionResult<List<CommentDTO>>> GetCommentsByTaskId(long taskId)
         {
-            return await _commentBusiness.GetCommentsByTaskIdAsync(taskId);
+            return Ok(await _commentBusiness.GetCommentsByTaskIdAsync(taskId));
+        }
+
+        /// <summary>
+        /// Insert new comment
+        /// </summary>
+        /// <param name="comment"></param>
+        /// <returns>ActionResult</returns>
+        [HttpPost()]
+        public async Task<ActionResult> PostCommentAsync(CommentDTO comment)
+        {
+            await _commentBusiness.PostCommentAsync(comment);
+
+            return Ok();
         }
     }
 }

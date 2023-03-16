@@ -10,11 +10,16 @@ public class StatusHistoryRepositoryTests
     private IStatusHistoryRepository _statusHistoryRepository;
     private ILogWriter _log;
 
-    [TestMethod]
-    public async Task GetStatusHistorysAsyncTest()
+    private void StartServices()
     {
         _log = new LogWriter();
         _statusHistoryRepository = new StatusHistoryRepository(_log);
+    }
+
+    [TestMethod]
+    public async Task GetStatusHistorysAsyncTest()
+    {
+        StartServices();
 
         var result = await _statusHistoryRepository.GetStatusHistorysAsync();
 
@@ -24,8 +29,7 @@ public class StatusHistoryRepositoryTests
     [TestMethod]
     public async Task GetStatusHistorysBySectionIdAsyncTest()
     {
-        _log = new LogWriter();
-        _statusHistoryRepository = new StatusHistoryRepository(_log);
+        StartServices();
 
         var result = await _statusHistoryRepository.GetStatusHistoryByTaskIdAsync(6);
 
