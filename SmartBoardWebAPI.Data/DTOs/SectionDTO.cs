@@ -17,7 +17,7 @@ namespace SmartBoardWebAPI.Data.DTOs
         [JsonPropertyName("position")]
         public long Position { get; set; }
         [JsonRequired]
-        [JsonPropertyName("boardid")]
+        [JsonPropertyName("boardId")]
         public long BoardId { get; set; }
     }
 }
