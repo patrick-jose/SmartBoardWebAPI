@@ -25,5 +25,13 @@ namespace SmartBoardWebAPI.Data.Repository
         /// <param name="password"></param>
         /// <returns>bool</returns>
         Task<bool> CheckCredentialsAsync(UserDTO dto, string password);
+
+        /// <summary>
+        /// Get user details by name and password
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        Task<UserModel> GetUserAsync(string name, string password);
     }
 }

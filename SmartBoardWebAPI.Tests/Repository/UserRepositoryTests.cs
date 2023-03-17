@@ -28,6 +28,16 @@ public class UserRepositoryTests
     }
 
     [TestMethod]
+    public async Task GetUserAsyncTest()
+    {
+        StartServices();
+
+        var result = await _userRepository.GetUserAsync("Patrick", "patrickpw");
+
+        Assert.IsNotNull(result);
+    }
+
+    [TestMethod]
     public async Task GetUsersByIdAsyncTestResturnNothing()
     {
         StartServices();

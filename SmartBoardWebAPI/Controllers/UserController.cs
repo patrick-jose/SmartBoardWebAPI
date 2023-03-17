@@ -58,6 +58,18 @@ namespace SmartUserWebAPI.Controllers
         }
 
         /// <summary>
+        /// Get user details by name and password
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns>bool</returns>
+        [HttpGet("GetDetails/")]
+        public async Task<UserDTO> GetUser(string userName, string password)
+        {
+            return await _userBusiness.GetUserAsync(userName, password);
+        }
+
+        /// <summary>
         /// Update user
         /// </summary>
         /// <param name="user"></param>

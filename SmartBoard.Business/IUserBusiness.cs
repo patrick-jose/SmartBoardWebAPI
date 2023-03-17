@@ -38,5 +38,13 @@ namespace SmartBoardWebAPI.Business
         /// <param name="user"></param>
         /// <returns></returns>
         Task PutUserAsync(UserDTO user);
+
+        /// <summary>
+        /// Get user details by name and password
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        Task<UserDTO> GetUserAsync(string name, string password);
     }
 }

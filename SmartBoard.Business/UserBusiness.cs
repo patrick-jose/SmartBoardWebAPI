@@ -59,6 +59,21 @@ namespace SmartBoardWebAPI.Business
             }
         }
 
+        public async Task<UserDTO> GetUserAsync(string name, string password)
+        {
+            try
+            {
+                var userModel = await _userRepository.GetUserAsync(name, password);
+
+                return userModel.ToDTO();
+            }
+            catch (Exception ex)
+            {
+                _log.LogWrite(ex.Message);
+                throw ex;
+            }
+        }
+
         public async Task<UserDTO> GetUserByIdAsync(long id)
         {
             try

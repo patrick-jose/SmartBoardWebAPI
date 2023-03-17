@@ -37,6 +37,29 @@ namespace SmartBoardWebAPI.Data.Repository
             }
         }
 
+        public async Task<UserModel> GetUserAsync(string name, string password)
+        {
+            try
+            {
+                string commandText = @$"select * from smartboard.user u
+                                        where u.name = @name
+                                        and u.password = @password";
+
+                var queryArgs = new { name = name, password = password };
+
+                var user = await _dbConnection.connection.QueryFirstOrDefaultAsync<UserModel>(commandText, queryArgs);
+
+                _dbConnection.CloseConnection();
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+                _log.LogWrite(ex.Message);
+                throw;
+            }
+        }
+
         public async Task<UserModel> GetUserByIdAsync(long id)
         {
             try
