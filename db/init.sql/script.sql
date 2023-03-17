@@ -809,15 +809,6 @@ ALTER TABLE ONLY smartboard.statushistory
 
 
 --
--- TOC entry 3224 (class 2606 OID 16468)
--- Name: task task_assignee_fk; Type: FK CONSTRAINT; Schema: smartboard; Owner: postgres
---
-
-ALTER TABLE ONLY smartboard.task
-    ADD CONSTRAINT task_assignee_fk FOREIGN KEY (assigneeid) REFERENCES smartboard."user"(id);
-
-
---
 -- TOC entry 3225 (class 2606 OID 16473)
 -- Name: task task_creator_fk; Type: FK CONSTRAINT; Schema: smartboard; Owner: postgres
 --
