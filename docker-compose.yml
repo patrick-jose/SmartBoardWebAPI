@@ -3,20 +3,17 @@ version: '3.1'
 
 services:
 
-  SmartBoardDB:
-    image: postgres:latest
-    restart: unless-stopped
-    environment:
-      - POSTGRES_PASSWORD=postgrespw
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=smartboarddb
-    ports: 
-      - "5432:5432"
-    volumes: 
-      - db:/var/lib/postgresql/data/
-      - ./db/init.sql:/docker-entrypoint-initdb.d/
+  SmartBoardWebAPI:
+    image: smartboardwebapi
+    build:
+      context: .
+      dockerfile: SmartBoardWebAPI/Dockerfile
+    ports:
+      - "7068:80"
     networks:
       - smartboard-network
+    environment:
+      - ASPNETCORE_HTTPS_PORT=7068
 
 volumes:
   db:
