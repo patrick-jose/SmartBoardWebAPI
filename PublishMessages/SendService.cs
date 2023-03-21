@@ -17,7 +17,12 @@ namespace PublishMessages
         public async Task<bool> SendMessage(string json, Header header)
         {
             var success = false;
-            var factory = new ConnectionFactory { HostName = "localhost" };
+            var factory = new ConnectionFactory 
+            { 
+                Uri = new Uri(@"amqp://guest:guest@rabbitmq:5672/"),
+                NetworkRecoveryInterval = TimeSpan.FromSeconds(10),
+                AutomaticRecoveryEnabled = true
+            };
             using var connection = factory.CreateConnection();
             using var model = connection.CreateModel();
             var properties = model.CreateBasicProperties();
